@@ -52,57 +52,29 @@ export class SystemeComponent implements OnInit {
 
   }
   /*Fonction pour Extracteur d'aire  */
- Allumer(imageNameObject: { srcr: string; srcs: string; src: string;}) {
+  onClick(imageNameObject: { srcr: string; srcs: string; src: string;}) {
     this.imageSrc = imageNameObject.src;
-    this.socketService.Allumer() 
 
-  }
-  Eteindre(imageNameObject: { srcr: string; srcs: string; src: string;}) {
-    this.imageSrc = imageNameObject.src;
-    this.socketService.Eteindre() 
   }
   /*Fonction  pour Toit  */
-  ouverture(imageNameObject: { srcr: string; srcs: string; src: string;}) {
+  cliquer(imageNameObject: { srcr: string; srcs: string; src: string;}) {
 
     this.imgFermer = imageNameObject.src;
-      this.socketService.ouverture() 
-  }
-  Fermeture(imageNameObject: { srcr: string; srcs: string; src: string;}) {
 
-    this.imgFermer = imageNameObject.src;
-      this.socketService.Fermeture() 
   }
   /* Fonction pour arrosage par défaut */
   arrose(imageNameObject: { srcr: string; srcs: string; src: string;}) {
     this.imgpompe = imageNameObject.src;
-    this.socketService. arroser() 
+    this.socketService.allumer()
   }
-  /*  */
-  arreter(imageNameObject: { srcr: string; srcs: string; src: string;}) {
-    this.imgpompe = imageNameObject.src;
-    this.socketService.arreter()
-   
-  }
- 
-  arroseTomate(imageNameObject: { srcr: string; srcs: string; src: string;}) {
+  /* Fonction pour arrosage Tomate */
+  arroseT(imageNameObject: { srcr: string; srcs: string; src: string;}) {
     this. imgtomate= imageNameObject.src;
-    this.socketService. arroseTomate()
-  }
-  arretomate(imageNameObject: { srcr: string; srcs: string; src: string;}) {
-    this. imgtomate= imageNameObject.src;
-    this.socketService.arretomate ()
 
   }
- 
- 
-  arroseOignon(imageNameObject: { srcr: string; srcs: string; src: string;}) {
+  /* Fonction pour arrosage Tomate */
+  arroseO(imageNameObject: { srcr: string; srcs: string; src: string;}) {
     this.imgOignon= imageNameObject.src;
-    this.socketService.arroseOignon()
-
-  }
-  arretOignon(imageNameObject: { srcr: string; srcs: string; src: string;}) {
-    this.imgOignon= imageNameObject.src;
-    this.socketService.arretOignon()
 
   }
 }
