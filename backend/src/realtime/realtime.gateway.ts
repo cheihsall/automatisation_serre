@@ -17,6 +17,7 @@ export class RealtimeGateway
   @WebSocketServer()
   server: Server;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleDisconnect(client: any) {
     throw new Error('Method not implemented.');
   }
