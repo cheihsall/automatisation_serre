@@ -27,7 +27,7 @@ export class RealtimeGateway
     client.on('allumer', (data: any) => {
       console.log(data);
     });
-  }
+git   }
 
   @SubscribeMessage('message')
   handleMessage(client: any, payload: any): string {
