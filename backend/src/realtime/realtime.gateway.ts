@@ -24,19 +24,10 @@ export class RealtimeGateway
     setInterval(() => {
       client.emit('parametre', this.data);
     }, 1000);
-    client.on('systeme', (data: any) => {
+    client.on('allumer', (data: any) => {
       console.log(data);
-      if (data == 'arroser'){
-      /*   console.log('arduino arrose les plante'); */
-        
-      }
-      if (data == 'arreter'){
-       /*  console.log('arduino arrete  darroser les plante'); */
-        
-      }
     });
-   
-  }
+ }
 
   @SubscribeMessage('message')
   handleMessage(client: any, payload: any): string {
