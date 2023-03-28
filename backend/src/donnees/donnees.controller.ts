@@ -1,3 +1,4 @@
+//mport { donnee } from './../../../frontend/src/app/test2';
 import {
   Controller,
   Get,
@@ -7,6 +8,8 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { from } from 'rxjs';
 import { DonneesService } from './donnees.service';
 import { CreateDonneeDto } from './dto/create-donnee.dto';
 import { UpdateDonneeDto } from './dto/update-donnee.dto';
@@ -15,9 +18,22 @@ import { UpdateDonneeDto } from './dto/update-donnee.dto';
 export class DonneesController {
   constructor(private readonly donneesService: DonneesService) {}
 
-  @Post()
+  /* @Post()
   create(@Body() createDonneeDto: CreateDonneeDto) {
     return this.donneesService.create(createDonneeDto);
+  } */
+  /*  @Post('create')
+  async create(
+    @Body()
+    createDonneeDto: CreateDonneeDto,
+  ): Promise<{ donnee: any }> {
+    return this.donneesService.create(donnee);
+  } */
+
+  @Post('create')
+  createdonnee(@Body() createDonneeDto: CreateDonneeDto) {
+    return this.donneesService.create(createDonneeDto);
+    console.log(createDonneeDto);
   }
 
   @Get()
