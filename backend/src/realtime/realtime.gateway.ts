@@ -43,7 +43,7 @@ export class RealtimeGateway
 
   constructor(
     @InjectModel(Parametres.name)
-    private climatModel: Model<ParametresDocument>,
+    private parametresModel: Model<ParametresDocument>,
   ) {}
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleDisconnect(client: any) {
@@ -102,7 +102,7 @@ export class RealtimeGateway
       client.emit('connection', param);
       const fullDate = `${jour}/${mois}/${annee}`;
       if (heure == 8 && minutes == 0 && seconds == 0) {
-        const createdClimat = new this.climatModel({
+        const createdparam = new this.parametresModel({
           // revoir climatModel
           '8h': {
             temperature: temperature,
@@ -130,11 +130,11 @@ export class RealtimeGateway
           heure: `${heure}:${minutes}:${seconds}`,
           moyenne: { temperature, humidite },
         });
-        createdClimat.save();
+        createdparam.save();
         client.emit('connection', 'enregistrement dans la base de données');
       }
       if (heure == 8 && minutes == 0 && seconds == 0) {
-        this.climatModel
+        this.parametresModel
           .updateOne(
             { date: fullDate },
             {
@@ -152,7 +152,7 @@ export class RealtimeGateway
         client.emit('connection', 'enregistrement dans la base de données');
       }
       if (heure == 12 && minutes == 0 && seconds == 0) {
-        this.climatModel
+        this.parametresModel
           .updateOne(
             { date: fullDate },
             {
@@ -170,7 +170,7 @@ export class RealtimeGateway
         client.emit('connection', 'enregistrement dans la base de données');
       }
       if (heure == 19 && minutes == 0 && seconds == 0) {
-        this.climatModel
+        this.parametresModel
           .updateOne(
             { date: fullDate },
             {
