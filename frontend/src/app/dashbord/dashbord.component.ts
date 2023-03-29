@@ -39,7 +39,7 @@ export class DashbordComponent  {
     pass: string = '';
   filter_entree:any;
     constructor(
-       public formBuilder: FormBuilder ) {
+       public formBuilder: FormBuilder, private router: Router ) {
       this.profileForm = this.formBuilder.group({
 
         actuelPass:['',[Validators.required ]],
@@ -48,6 +48,10 @@ export class DashbordComponent  {
 
     }
     )
+    }
+    destroy(){
+      localStorage.removeItem('token');
+this.router.navigateByUrl('/')
     }
 
     ngOnInit(): void {this.filter_entree=donnee;

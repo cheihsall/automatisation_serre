@@ -49,8 +49,8 @@ export class SystemeComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-  }
+    // TODO document why this method 'ngOnInit' is empty
+}
   /*Fonction pour Extracteur d'aire  */
   onClick(imageNameObject: { srcr: string; srcs: string; src: string;}) {
     this.imageSrc = imageNameObject.src;
