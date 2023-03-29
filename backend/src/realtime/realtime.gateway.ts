@@ -17,8 +17,8 @@ export class RealtimeGateway
   @WebSocketServer()
   server: Server;
 
-  handleDisconnect(client: any) {
-    throw new Error('Method not implemented.');
+  handleDisconnect() {
+    console.log('disconnect');
   }
   handleConnection(@ConnectedSocket() client: Socket) {
     setInterval(() => {

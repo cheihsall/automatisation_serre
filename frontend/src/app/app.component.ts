@@ -13,8 +13,9 @@ export class AppComponent {
   constructor(private route: Router) {
     this.route.events.subscribe(() => {
       if (
-        this.route.routerState.snapshot.url == '/'
-        
+        this.route.routerState.snapshot.url == '/' ||
+        localStorage.getItem('token') == null
+
       ) {
         this.isLogin = true;
       } else {
