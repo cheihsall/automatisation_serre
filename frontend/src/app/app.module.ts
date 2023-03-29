@@ -38,7 +38,8 @@ const config: SocketIoConfig= {
     AppRoutingModule,
    ReactiveFormsModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+   
 
   ],
   providers: [],
