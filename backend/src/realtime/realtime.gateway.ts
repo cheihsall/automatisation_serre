@@ -103,7 +103,6 @@ export class RealtimeGateway
       const fullDate = `${jour}/${mois}/${annee}`;
       if (heure == 8 && minutes == 0 && seconds == 0) {
         const createdparam = new this.parametresModel({
-          // revoir climatModel
           '8h': {
             temperature: temperature,
             humidite: humidite,
