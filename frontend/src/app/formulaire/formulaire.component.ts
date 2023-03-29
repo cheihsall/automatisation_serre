@@ -22,6 +22,7 @@ export class FormulaireComponent implements OnInit{
 
 
   inputType: any = "password";
+  web: any;
 
 
   constructor(
@@ -89,8 +90,12 @@ this.code = err.error.code;
 
 
   ngOnInit() {
-
     this.userService.login_nfc().subscribe({
+      next:(data: any) => {
+        console.log(data+'jrrreeee');
+this.donnee = data
+const zz = {idcarte: this.donnee};
+    this.userService.login(zz).subscribe({
       next:(data: any) => {
         console.log(data);
 
@@ -99,7 +104,7 @@ this.code = err.error.code;
 
           localStorage.setItem('token', data.token);
 
-          this.route.navigate(['/systeme'])
+          this.route.navigate(['/map'])
 
 
       },
@@ -128,6 +133,18 @@ this.code = err.error.code;
       });
 
 
+    }
+  })
+
+
+        this.userService.webserial().subscribe((data:any) =>{
+           this.web = data;
+           //filtrer les données
+          console.log(data);
+
+
+
+        });
 
 
 }

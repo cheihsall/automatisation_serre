@@ -21,7 +21,7 @@ export class RealtimeService {
   login_nfc() {
     return new Observable(observer => {
       this.socket.on('idcarte', (data: unknown) => {
-        observer.next(this.login(data));
+        observer.next(data);
 
 
       });
@@ -37,5 +37,11 @@ login(user: any) {
   get isLoggedIn(): boolean {
     let authToken = localStorage.getItem('token');
     return authToken !== null ? true : false;
-  }}
+  }
+
+  webserial() {
+    return this.http.get('http://192.168.43.68:80');
+  }
+
+}
 
