@@ -65,9 +65,11 @@ login(user: any) {
   }
 
   getUser() {
+    console.log(localStorage.getItem('token'));
+
     return this.http.get('http://localhost:3001/auth/profile', {
       headers: {
-        'Content-Type': 'Application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer '+ localStorage.getItem('token')
       }
     });

@@ -37,7 +37,7 @@ nom:any;
   inputType_confirm:any = "password";
   inputType_confirm_txt = 0;
   inputType_confirm_pwd = 1;
-  identifiant = localStorage.getItem('');
+  identifiant = '';
 
 
     pass: string = '';
@@ -58,13 +58,15 @@ nom:any;
 this.router.navigateByUrl('/')
     }
 
-   
+
 
     ngOnInit(): void {this.filter_entree=donnee;
       console.log(this.filter_entree)
       this.UserService.getUser().subscribe({
         next:(data: any) => {
-          console.log(data);
+         this.prenom = data.prenom;
+         this.nom = data.nom;
+         this.identifiant= this.prenom + ' '+ this.nom
         }
         });
    }

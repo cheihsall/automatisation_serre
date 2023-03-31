@@ -48,13 +48,13 @@ export class FormulaireComponent implements OnInit{
     // appellle service login
     this.userService.login(this.registerForm.value).subscribe({
       next:(data: any) => {
-        console.log(data);
+       // console.log(data);
 
 
 
 
 
-          localStorage.setItem('token', data.token);
+          localStorage.setItem('token',  data.access_token);
 
           this.route.navigate(['/systeme'])
 
@@ -93,7 +93,7 @@ this.code = err.error.code;
   ngOnInit() {
     this.userService.login_nfc().subscribe({
       next:(data: any) => {
-        console.log(data);
+     //  console.log(data);
 this.donnee = data
 const rfid = {idcarte: this.donnee};
     this.userService.login(rfid).subscribe({
@@ -101,7 +101,7 @@ const rfid = {idcarte: this.donnee};
         console.log(data);
         this.success = true;
           this.message = "Accés autorisé !";
-          localStorage.setItem('token', data.token);
+          localStorage.setItem('token', data.access_token);
 
           this.route.navigate(['/systeme'])
       },
