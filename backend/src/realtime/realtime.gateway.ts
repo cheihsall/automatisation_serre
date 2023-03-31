@@ -52,7 +52,7 @@ export class RealtimeGateway
   ) {}
 
   handleDisconnect() {
-    console.log('disconnect');
+    console.log('Socket déconnecté');
   }
   handleConnection(@ConnectedSocket() client: Socket) {
     console.log('Connexion Websocket');
