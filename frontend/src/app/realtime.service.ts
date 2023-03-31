@@ -16,7 +16,7 @@ export class RealtimeService {
     this.socket.emit('allumer', true)
   }
 
- constructor(private socket: Socket) {  }
+
   arroser() {
     this.socket.emit('systeme', 'arroser')
   }
