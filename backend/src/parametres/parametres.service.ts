@@ -4,6 +4,7 @@ import { UpdateParametreDto } from './dto/update-parametre.dto';
 
 @Injectable()
 export class ParametresService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create(createParametreDto: CreateParametreDto) {
     return 'This action adds a new parametre';
   }
@@ -16,6 +17,7 @@ export class ParametresService {
     return `This action returns a #${id} parametre`;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   update(id: number, updateParametreDto: UpdateParametreDto) {
     return `This action updates a #${id} parametre`;
   }
