@@ -16,7 +16,7 @@ export class RealtimeService {
     this.socket.emit('allumer', true)
   }
 
- constructor(private socket: Socket) {  }
+
   arroser() {
     this.socket.emit('systeme', 'arroser')
   }
@@ -62,6 +62,17 @@ export class RealtimeService {
 
 login(user: any) {
     return this.http.post('http://localhost:3001/auth/login', user);
+  }
+
+  getUser() {
+    console.log(localStorage.getItem('token'));
+
+    return this.http.get('http://localhost:3001/auth/profile', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+ localStorage.getItem('token')
+      }
+    });
   }
   getToken() {
     return localStorage.getItem('token');

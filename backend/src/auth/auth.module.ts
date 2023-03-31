@@ -1,24 +1,23 @@
 import { Module } from '@nestjs/common';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { DonneesModule } from 'src/donnees/donnees.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { DonneesModule } from 'src/donnees/donnees.module';
-import { DonneesService } from 'src/donnees/donnees.service';
-import { UserSchema } from 'src/donnees/entities/donnee.entity';
-import { AuthController } from './auth.controller';
-import { JwtStrategy } from './jwt.strategy';
-import { MongooseModule } from '@nestjs/mongoose';
+import { JwtStrategy } from './jwtStrategy';
 
-import { AuthService } from './auth.service';
+import { Socket } from 'socket.io';
+
 @Module({
   controllers: [AuthController],
   imports: [
     DonneesModule,
     PassportModule,
     JwtModule.register({
-      secret: 'cheikh',
+      secret: 'secretKey',
       signOptions: { expiresIn: '86400s' },
     }),
   ],
-  providers: [JwtStrategy, AuthService],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}

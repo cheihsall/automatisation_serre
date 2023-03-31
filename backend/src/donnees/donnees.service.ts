@@ -39,9 +39,9 @@ export class DonneesService {
   }
 
   async login(createDonneeDto: CreateDonneeDto) {
-    const user: any = {};
+    let user: any = {};
     if (!createDonneeDto.idcarte) {
-      const user = await this.userModel.findOne({
+      user = await this.userModel.findOne({
         email: createDonneeDto.email,
       });
       if (!user) {
@@ -55,13 +55,8 @@ export class DonneesService {
       if (!goodPassword) {
         throw new UnauthorizedException({ message: 'nopass', code: 'nopass' });
       }
-      return {
-        email: user.email,
-        nom: user.nom,
-        prenom: user.prenom,
-      };
     } else {
-      const user = await this.userModel.findOne({
+      user = await this.userModel.findOne({
         idcarte: createDonneeDto.idcarte,
       });
       if (!user) {
@@ -73,6 +68,7 @@ export class DonneesService {
     }
 
     return {
+      id: user._id,
       email: user.email,
       nom: user.nom,
       prenom: user.prenom,
