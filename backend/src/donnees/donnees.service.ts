@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { User, UserDocument, UserSchema } from './entities/donnee.entity';
+
 import {
   HttpException,
   HttpStatus,
   Injectable,
   UnauthorizedException,
+  NotFoundException
 } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateDonneeDto } from './dto/create-donnee.dto';
 import { UpdateDonneeDto } from './dto/update-donnee.dto';
-
-import * as bcrypt from 'bcryptjs';
+import { User, UserDocument } from './entities/donnee.entity';
+import * as bcrypt  from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class DonneesService {
@@ -38,9 +39,14 @@ export class DonneesService {
     return `This action returns a #${id} donnee`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(id: number, _updateDonneeDto: UpdateDonneeDto) {
-    return `This action updates a #${id} donnee`;
+  // modification mdp
+  async update(updateDonneeDto: UpdateDonneeDto, id: string){
+    try {
+      return this.userModel.findOneAndUpdate({_id: id}, updateDonneeDto)
+    
+    } catch (error) {
+      throw new HttpException('Error updating article', HttpStatus.BAD_REQUEST);
+    }
   }
 
   remove(id: number) {

@@ -35,8 +35,8 @@ export class DonneesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDonneeDto: UpdateDonneeDto) {
-    return this.donneesService.update(+id, updateDonneeDto);
+  update( @Body() updateDonneeDto: UpdateDonneeDto, @Param('id') id: string) {
+   return  this.donneesService.update(updateDonneeDto, id);
   }
 
   @Delete(':id')
