@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { RealtimeService } from '../realtime.service';
 import { donnee } from './../test2';
-import { UserService } from '../user.service';
+
 import Swal from 'sweetalert2';
 
 
