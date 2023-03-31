@@ -25,10 +25,15 @@ const port = new SerialPort({
   parity: 'none',
   stopBits: 1,
 });
+
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-parser.on('data', console.log);
-port.write('ook');
-parser.write('ook');
+parser.on('data', (data) => {
+  console.log(data);
+});
+
+port.write('cool');
+parser.write('cool');
+/* FIN code connection port serial esp32 */
 
 @WebSocketGateway({ cors: true })
 export class RealtimeGateway
@@ -45,14 +50,13 @@ export class RealtimeGateway
     @InjectModel(Parametres.name)
     private parametresModel: Model<ParametresDocument>,
   ) {}
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  handleDisconnect(client: any) {
-    throw new Error('Method not implemented.');
+
+  handleDisconnect() {
+    console.log('disconnect');
   }
   handleConnection(@ConnectedSocket() client: Socket) {
-    setInterval(() => {
-      client.emit('parametres', this.data);
-    }, 1000);
+    console.log('Connexion Websocket');
+
     client.on('allumer', (data: any) => {
       console.log(data);
     });
@@ -186,6 +190,23 @@ export class RealtimeGateway
           });
         client.emit('connection', 'enregistrement dans la base de données');
       }
+    });
+
+    setInterval(() => {
+      client.emit('idcvddarte', this.data);
+    }, 5000);
+    client.on('systeme', (data: any) => {
+      console.log(data);
+      if (data == 'arroser') {
+        /*   console.log('arduino arrose les plante'); */
+      }
+      if (data == 'arreter') {
+        /*  console.log('arduino arrete  darroser les plante'); */
+      }
+    });
+
+    client.on('request', (data: any) => {
+      console.log(data);
     });
   }
 
