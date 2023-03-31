@@ -19,7 +19,7 @@ import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
-  path: '/dev/ttyACM0',
+  path: '/dev/ttyUSB0',
   baudRate: 9600,
   dataBits: 8,
   parity: 'none',
@@ -51,7 +51,7 @@ export class RealtimeGateway
   }
   handleConnection(@ConnectedSocket() client: Socket) {
     setInterval(() => {
-      client.emit('parametre', this.data);
+      client.emit('parametres', this.data);
     }, 1000);
     client.on('allumer', (data: any) => {
       console.log(data);
