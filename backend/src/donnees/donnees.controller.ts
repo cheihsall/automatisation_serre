@@ -6,16 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { DonneesService } from './donnees.service';
 import { CreateDonneeDto } from './dto/create-donnee.dto';
 import { UpdateDonneeDto } from './dto/update-donnee.dto';
 
+//@UseGuards(JwtAuthGuard)
 @Controller('donnees')
 export class DonneesController {
   constructor(private readonly donneesService: DonneesService) {}
 
-  @Post()
+  @Post('/p')
   create(@Body() createDonneeDto: CreateDonneeDto) {
     return this.donneesService.create(createDonneeDto);
   }

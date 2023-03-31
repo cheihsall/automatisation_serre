@@ -55,22 +55,21 @@ export const RealtimeService= () => {
 export class RealtimeGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
-  data = 'hello khadija ewl';
+  data = 'kjjhgf';
   @WebSocketServer()
   server: Server;
 
-  
 
-  handleDisconnect(client: any) {
-    throw new Error('Method not implemented.');
+  handleDisconnect() {
+    console.log('disconnect');
   }
   handleConnection(@ConnectedSocket() client: Socket) {
     console.log('Connexion Websocket') 
-    setInterval(() => {
-      
-      client.emit('parametre', this.data);
-    }, 1000);
+   
     client.on('systeme', (data: any) => {
+      client.emit('idcarte', this.data);
+    }, 5000);
+    client.on('allumer', (data: any) => {
       console.log(data);
       if (data == 'arroser'){
       /*   console.log('arduino arrose les plante'); */
@@ -81,7 +80,13 @@ export class RealtimeGateway
         
       }
     });
+
    
+
+    client.on('request', (data: any) => {
+      console.log(data);
+    });
+
   }
 
   @SubscribeMessage('message')

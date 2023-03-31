@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormulaireComponent } from './formulaire/formulaire.component';
@@ -14,7 +14,7 @@ import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const config: SocketIoConfig= {
-  url: 'http://localhost:3000',
+  url: 'http://localhost:3001',
   options: {
     transports: ['websocket']
   }
@@ -38,8 +38,8 @@ const config: SocketIoConfig= {
     AppRoutingModule,
    ReactiveFormsModule,
     FormsModule,
-    NgxPaginationModule
-
+    NgxPaginationModule,
+HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

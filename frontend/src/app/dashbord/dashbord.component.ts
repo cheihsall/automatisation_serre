@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { data } from 'jquery';
+import { RealtimeService } from '../realtime.service';
 import { donnee } from './../test2';
 
 
@@ -11,14 +13,15 @@ import { donnee } from './../test2';
   styleUrls: ['./dashbord.component.scss']
 })
 
-export class DashbordComponent  {
+export class DashbordComponent implements OnInit {
 
   profileForm!:FormGroup
  temperature: any;
   humidite: any;
   lumiere: any;
   humsol: any;
-
+prenom:any;
+nom:any;
 
   submitted=false;
   invalid = false;
@@ -34,12 +37,13 @@ export class DashbordComponent  {
   inputType_confirm:any = "password";
   inputType_confirm_txt = 0;
   inputType_confirm_pwd = 1;
+  identifiant = localStorage.getItem('token');
 
 
     pass: string = '';
   filter_entree:any;
     constructor(
-       public formBuilder: FormBuilder ) {
+       public formBuilder: FormBuilder, private router: Router,   private UserService: RealtimeService, ) {
       this.profileForm = this.formBuilder.group({
 
         actuelPass:['',[Validators.required ]],
@@ -48,6 +52,10 @@ export class DashbordComponent  {
 
     }
     )
+    }
+    destroy(){
+      localStorage.removeItem('token');
+this.router.navigateByUrl('/')
     }
 
     ngOnInit(): void {this.filter_entree=donnee;
