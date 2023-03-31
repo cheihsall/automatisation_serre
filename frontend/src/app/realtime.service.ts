@@ -12,6 +12,7 @@ export class RealtimeService {
   endpoint: any;
   httpClient: any;
   constructor(private socket: Socket, private http: HttpClient, private route: Router) {  }
+  //JOSEPHINE
   allumer() {
     this.socket.emit('allumer', true)
   }
@@ -50,6 +51,10 @@ export class RealtimeService {
     this.socket.emit('systeme', 'Extracteur éteinte' )
   }
 
+  //FIN JOSEPHINE SOCKET
+
+  //CHEIKH SOCKET
+
   login_nfc() {
     return new Observable(observer => {
       this.socket.on('idcarte', (data: unknown) => {
@@ -59,6 +64,16 @@ export class RealtimeService {
       });
     });
      }
+//FIN CHEIKH SOCKET
+
+//FADEL SOCKET
+
+//FIN FADEL SOCKET
+
+//KHADIJA SOCKET
+
+
+//FINKHADIJASOCKET
 
 login(user: any) {
     return this.http.post('http://localhost:3001/auth/login', user);
@@ -95,5 +110,6 @@ login(user: any) {
     return this.http.patch(`http://localhost:3001/donnees/${id}`, {"actuelPass": data.actuelPass,
   "newPass":data.newPass})
   }
+  
 }
 
