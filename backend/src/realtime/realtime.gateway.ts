@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 import {
   ConnectedSocket,
   OnGatewayConnection,
@@ -12,10 +5,10 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 import { Server } from 'ws';
+
 import { SerialPort } from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 
@@ -41,37 +34,37 @@ parser.write('cool');
 
 
 
+
 @WebSocketGateway({ cors: true })
 export class RealtimeGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
-  data = 'hello khadija ewl';
+  data = 'kjjhgf';
   @WebSocketServer()
   server: Server;
 
-  
-
-  handleDisconnect(client: any) {
-    throw new Error('Method not implemented.');
+  handleDisconnect() {
+    console.log('disconnect');
   }
   handleConnection(@ConnectedSocket() client: Socket) {
-    console.log('Connexion Websocket') 
+    console.log('Connexion Websocket');
+
     setInterval(() => {
-      
-      client.emit('parametre', this.data);
-    }, 1000);
+      client.emit('idcarte', this.data);
+    }, 5000);
     client.on('systeme', (data: any) => {
       console.log(data);
-      if (data == 'arroser'){
-      /*   console.log('arduino arrose les plante'); */
-        
+      if (data == 'arroser') {
+        /*   console.log('arduino arrose les plante'); */
       }
-      if (data == 'arreter'){
-       /*  console.log('arduino arrete  darroser les plante'); */
-        
+      if (data == 'arreter') {
+        /*  console.log('arduino arrete  darroser les plante'); */
       }
     });
-   
+
+    client.on('request', (data: any) => {
+      console.log(data);
+    });
   }
 
   @SubscribeMessage('message')
