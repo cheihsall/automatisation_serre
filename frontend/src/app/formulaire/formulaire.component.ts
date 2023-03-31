@@ -55,8 +55,7 @@ export class FormulaireComponent implements OnInit{
 
 
           localStorage.setItem('token', data.token);
-          localStorage.setItem('prenom', data.prenom);
-          localStorage.setItem('nom', data.nom);
+
           this.route.navigate(['/systeme'])
 
 
@@ -103,8 +102,8 @@ const rfid = {idcarte: this.donnee};
         this.success = true;
           this.message = "Accés autorisé !";
           localStorage.setItem('token', data.token);
-    
-          this.route.navigate(['/map'])
+
+          this.route.navigate(['/systeme'])
       },
 
       error:(err) => {

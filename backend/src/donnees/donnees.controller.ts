@@ -13,7 +13,7 @@ import { DonneesService } from './donnees.service';
 import { CreateDonneeDto } from './dto/create-donnee.dto';
 import { UpdateDonneeDto } from './dto/update-donnee.dto';
 
-//@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @Controller('donnees')
 export class DonneesController {
   constructor(private readonly donneesService: DonneesService) {}
@@ -23,7 +23,7 @@ export class DonneesController {
     return this.donneesService.create(createDonneeDto);
   }
 
-  @Get()
+  @Get('/g')
   findAll() {
     return this.donneesService.findAll();
   }

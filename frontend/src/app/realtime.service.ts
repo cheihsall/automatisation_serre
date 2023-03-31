@@ -63,6 +63,15 @@ export class RealtimeService {
 login(user: any) {
     return this.http.post('http://localhost:3001/auth/login', user);
   }
+
+  getUser() {
+    return this.http.get('http://localhost:3001/auth/profile', {
+      headers: {
+        'Content-Type': 'Application/json',
+        'Authorization': 'Bearer '+ localStorage.getItem('token')
+      }
+    });
+  }
   getToken() {
     return localStorage.getItem('token');
   }

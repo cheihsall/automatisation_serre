@@ -12,7 +12,7 @@ import { Server } from 'ws';
 export class RealtimeGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
-  data = 'kjvjhgf';
+  data = 'kjjhgf';
   @WebSocketServer()
   server: Server;
 
@@ -23,7 +23,7 @@ export class RealtimeGateway
     console.log('Connexion Websocket');
 
     setInterval(() => {
-      client.emit('idcarte', this.data);
+      client.emit('idBcarte', this.data);
     }, 5000);
     client.on('systeme', (data: any) => {
       console.log(data);
