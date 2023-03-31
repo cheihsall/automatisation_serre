@@ -53,14 +53,22 @@ export class DonneesService {
         user.password,
       );
       if (!goodPassword) {
-        throw new UnauthorizedException({ message: 'nopass' });
+        throw new UnauthorizedException({ message: 'nopass', code: 'nopass' });
       }
+      return {
+        email: user.email,
+        nom: user.nom,
+        prenom: user.prenom,
+      };
     } else {
       const user = await this.userModel.findOne({
         idcarte: createDonneeDto.idcarte,
       });
       if (!user) {
-        throw new UnauthorizedException({ message: 'nomail', code: 'nomail' });
+        throw new UnauthorizedException({
+          message: 'nocarte',
+          code: 'nocarte',
+        });
       }
     }
 
