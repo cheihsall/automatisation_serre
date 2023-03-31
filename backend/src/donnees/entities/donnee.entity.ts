@@ -5,6 +5,9 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User {
+  static save(): User | PromiseLike<User> {
+    throw new Error('Method not implemented.');
+  }
   @Prop()
   prenom: string;
   @Prop()
