@@ -12,28 +12,20 @@ import { Server } from 'ws';
 import { SerialPort } from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 
-
 /* code connection port serial esp32 */
 
 const port = new SerialPort({
   path: '/dev/ttyUSB0',
   baudRate: 115200,
-
 });
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-  parser.on('data', (data) => {
-    console.log(data);
-   
-  })
+parser.on('data', (data) => {
+  console.log(data);
+});
 
 port.write('cool');
 parser.write('cool');
 /* FIN code connection port serial esp32 */
-  
-
-
-
-
 
 @WebSocketGateway({ cors: true })
 export class RealtimeGateway
@@ -50,7 +42,7 @@ export class RealtimeGateway
     console.log('Connexion Websocket');
 
     setInterval(() => {
-      client.emit('idcarte', this.data);
+      client.emit('idcxarte', this.data);
     }, 5000);
     client.on('systeme', (data: any) => {
       console.log(data);
