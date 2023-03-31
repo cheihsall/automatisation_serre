@@ -1,10 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable ,HttpException,HttpStatus, NotFoundException} from '@nestjs/common';
 import { CreateDonneeDto } from './dto/create-donnee.dto';
 import { UpdateDonneeDto } from './dto/update-donnee.dto';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from './entities/donnee.entity';
+
 
 @Injectable()
 export class DonneesService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>, 
+  ) {}
+  
+  
   create(_createDonneeDto: CreateDonneeDto) {
     return 'This action adds a new donnee';
   }
@@ -18,8 +26,13 @@ export class DonneesService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(id: number, _updateDonneeDto: UpdateDonneeDto) {
-    return `This action updates a #${id} donnee`;
+  async update(_updateDonneeDto: UpdateDonneeDto, id: String){
+    try {
+      return this.userModel.findOneAndUpdate({_id: id}, _updateDonneeDto)
+    
+    } catch (error) {
+      throw new HttpException('Error updating article', HttpStatus.BAD_REQUEST);
+    }
   }
 
   remove(id: number) {
