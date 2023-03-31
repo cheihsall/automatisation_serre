@@ -1,4 +1,18 @@
+.alert{
+  filter: contrast(210%);
+  border: 1px solid #f5365c;
+}
+.alerte{
+  filter: contrast(210%);
+  border: 2px solid #019a39;
+  background-color: #fdfcfc;
+  color: #019a39;
+  border-radius: 10%;
 
+}
+.contour{
+  border: 5px solid #f5365c;
+}
 .invalid{
   border: 1px solid #f5365c;
   border-top-right-radius:  5px ;

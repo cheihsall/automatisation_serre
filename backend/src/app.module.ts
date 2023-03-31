@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { DonneesModule } from './donnees/donnees.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ParametresModule } from './parametres/parametres.module';
+
 import { AuthModule } from './auth/auth.module';
 
 @Module({

@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { data } from 'jquery';
+import { RealtimeService } from '../realtime.service';
 import { donnee } from './../test2';
 import { UserService } from '../user.service';
 import Swal from 'sweetalert2';
@@ -13,14 +15,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./dashbord.component.scss']
 })
 
-export class DashbordComponent  {
+export class DashbordComponent implements OnInit {
 
   profileForm!:FormGroup
  temperature: any;
   humidite: any;
   lumiere: any;
   humsol: any;
-
+prenom:any;
+nom:any;
 
   submitted=false;
   invalid = false;
@@ -36,13 +39,13 @@ export class DashbordComponent  {
   inputType_confirm:any = "password";
   inputType_confirm_txt = 0;
   inputType_confirm_pwd = 1;
+  identifiant = '';
 
 
     pass: string = '';
   filter_entree:any;
     constructor(
-      private userService: UserService,
-       public formBuilder: FormBuilder ) {
+       public formBuilder: FormBuilder, private router: Router,   private UserService: RealtimeService, ) {
       this.profileForm = this.formBuilder.group({
 
         actuelPass:['',[Validators.required ]],
@@ -52,10 +55,22 @@ export class DashbordComponent  {
     }
     )
     }
+    destroy(){
+      localStorage.removeItem('token');
+this.router.navigateByUrl('/')
+    }
+
+
 
     ngOnInit(): void {this.filter_entree=donnee;
       console.log(this.filter_entree)
-
+      this.UserService.getUser().subscribe({
+        next:(data: any) => {
+         this.prenom = data.prenom;
+         this.nom = data.nom;
+         this.identifiant= this.prenom + ' '+ this.nom
+        }
+        });
    }
 
 
@@ -77,7 +92,7 @@ export class DashbordComponent  {
         return;
       }
 
-      this.userService.updatePassword(localStorage.getItem('id'), this.profileForm.value).subscribe((data)=>{
+      this.UserService.updatePassword(localStorage.getItem('id'), this.profileForm.value).subscribe((data)=>{
        
            Swal.fire({
             position: 'center',

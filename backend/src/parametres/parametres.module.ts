@@ -4,7 +4,6 @@ import { ParametresController } from './parametres.controller';
 import { Parametres, ParametresSchema } from './entities/parametre.entity';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RealtimeGateway } from 'src/realtime/realtime.gateway';
-
 @Module({
   imports: [
     MongooseModule.forFeature([

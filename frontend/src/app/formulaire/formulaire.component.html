@@ -5,6 +5,7 @@
       <h1 class="text-white dark:text-dark-contrastText">Plateforme de Gestion de Serre automatisé </h1><br>
 
   </div>
+
 <div class="general">
 <div class="V">
   <div class="image">
@@ -22,7 +23,11 @@
   <div class="connexion ">
     <div class="">
       <div class="A">
-        <div class="alert alert-danger h4 text-center" role="alert" *ngIf="showcode ">
+
+        <div class="alert alert-danger h5 text-center" role="alert" *ngIf="eror ">
+          {{message}}
+        </div>
+        <div class="alerte alert-succes h3 text-center" role="alert" *ngIf="success ">
           {{message}}
         </div>
         <div class="shadow border-0 ">
