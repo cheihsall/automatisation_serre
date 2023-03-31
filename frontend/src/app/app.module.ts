@@ -14,7 +14,7 @@ import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const config: SocketIoConfig= {
-  url: 'http://localhost:3000',
+  url: 'http://localhost:3001',
   options: {
     transports: ['websocket']
   }

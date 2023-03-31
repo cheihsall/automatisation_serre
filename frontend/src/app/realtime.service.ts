@@ -29,7 +29,7 @@ export class RealtimeService {
      }
 
 login(user: any) {
-    return this.http.post('http://localhost:3000/auth/login', user);
+    return this.http.post('http://localhost:3001/auth/login', user);
   }
   getToken() {
     return localStorage.getItem('token');

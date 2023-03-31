@@ -53,8 +53,13 @@ export class DonneesService {
         user.password,
       );
       if (!goodPassword) {
-        throw new UnauthorizedException({ message: 'nopass' });
+        throw new UnauthorizedException({ message: 'nopass', code: 'nopass' });
       }
+      return {
+        email: user.email,
+        nom: user.nom,
+        prenom: user.prenom,
+      };
     } else {
       const user = await this.userModel.findOne({
         idcarte: createDonneeDto.idcarte,

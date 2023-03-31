@@ -13,7 +13,7 @@ import { Server } from 'ws';
 export class RealtimeGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
-  data = 'ello';
+  data = 'kjjhgf';
   @WebSocketServer()
   server: Server;
 
@@ -25,6 +25,9 @@ export class RealtimeGateway
       client.emit('idcarte', this.data);
     }, 5000);
     client.on('allumer', (data: any) => {
+      console.log(data);
+    });
+    client.on('request', (data: any) => {
       console.log(data);
     });
   }

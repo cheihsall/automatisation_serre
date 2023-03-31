@@ -18,6 +18,7 @@ export class FormulaireComponent implements OnInit{
   donnee: any;
   submitted = false;
   eror = false;
+  success = false;
   code: any;
 
 
@@ -54,7 +55,8 @@ export class FormulaireComponent implements OnInit{
 
 
           localStorage.setItem('token', data.token);
-
+          localStorage.setItem('prenom', data.prenom);
+          localStorage.setItem('nom', data.nom);
           this.route.navigate(['/systeme'])
 
 
@@ -92,21 +94,17 @@ this.code = err.error.code;
   ngOnInit() {
     this.userService.login_nfc().subscribe({
       next:(data: any) => {
-        console.log(data+'jrrreeee');
+        console.log(data);
 this.donnee = data
-const zz = {idcarte: this.donnee};
-    this.userService.login(zz).subscribe({
+const rfid = {idcarte: this.donnee};
+    this.userService.login(rfid).subscribe({
       next:(data: any) => {
         console.log(data);
-
-
-
-
+        this.success = true;
+          this.message = "Accés autorisé !";
           localStorage.setItem('token', data.token);
-
+    
           this.route.navigate(['/map'])
-
-
       },
 
       error:(err) => {
@@ -119,9 +117,9 @@ this.code = err.error.code;
           setTimeout(() => {
             window.location.reload();
           }, 2000);
-        } else if (this.code == "erreur") {
-          this.eror = true;
-          this.message = "erreur interne !";
+        } else if (this.code == "nocvarte") {
+          this.success = true;
+          this.message = "Accés autorisé !";
           setTimeout(() => {
             window.location.reload();
           }, 3000);
