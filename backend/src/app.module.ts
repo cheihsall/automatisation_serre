@@ -5,14 +5,12 @@ import { DonneesModule } from './donnees/donnees.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ParametresModule } from './parametres/parametres.module';
 
-import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
-import { DonneesService } from './donnees/donnees.service';
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://papa:2605@cluster0.wepa2rr.mongodb.net/homestead?retryWrites=true&w=majority',
+      'mongodb+srv://fadalba:Thiaroye44@cluster0.9vbufn8.mongodb.net/nestjs',
     ),
     DonneesModule,
     ParametresModule,

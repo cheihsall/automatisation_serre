@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^9.0.0",
+    "@nestjs/common": "^9.3.12",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.0.2",
     "@nestjs/mapped-types": "*",
@@ -28,7 +29,10 @@
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-socket.io": "^9.3.12",
+    "@nestjs/platform-ws": "^9.3.12",
     "@nestjs/websockets": "^9.3.12",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "@serialport/parser-readline": "^10.5.0",
     "parsers": "^0.1.1",
     "bcryptjs": "^2.4.3",
@@ -51,6 +55,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "electron-rebuild": "^3.2.9",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
