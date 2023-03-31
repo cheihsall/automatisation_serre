@@ -20,15 +20,15 @@ import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
   path: '/dev/ttyUSB0',
-  baudRate: 9600,
+  baudRate: 115200,
   dataBits: 8,
   parity: 'none',
   stopBits: 1,
 });
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-/* parser.on('data', console.log); */
-port.write('cool');
-parser.write('cool');
+parser.on('data', console.log);
+port.write('ook');
+parser.write('ook');
 
 @WebSocketGateway({ cors: true })
 export class RealtimeGateway
@@ -137,7 +137,7 @@ export class RealtimeGateway
           .updateOne(
             { date: fullDate },
             {
-              '12h': {
+              '12h16': {
                 temperature: temperature,
                 humidite: humidite,
                 humidite_sol: humidite_sol,
@@ -155,7 +155,7 @@ export class RealtimeGateway
           .updateOne(
             { date: fullDate },
             {
-              '12h': {
+              '12h17': {
                 temperature: temperature,
                 humidite: humidite,
                 humidite_sol: humidite_sol,
@@ -173,7 +173,7 @@ export class RealtimeGateway
           .updateOne(
             { date: fullDate },
             {
-              '19h': {
+              '12h18': {
                 temperature: temperature,
                 humidite: humidite,
                 humidite_sol: humidite_sol,
