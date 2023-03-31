@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://papa:2605@cluster0.wepa2rr.mongodb.net/homestead?retryWrites=true&w=majority',
+      'mongodb+srv://fadalba:Thiaroye44@cluster0.9vbufn8.mongodb.net/nestjs',
     ),
     DonneesModule,
     ParametresModule,

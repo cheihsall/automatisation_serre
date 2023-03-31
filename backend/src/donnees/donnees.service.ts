@@ -25,10 +25,10 @@ export class DonneesService {
     return `This action returns a #${id} donnee`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async update(_updateDonneeDto: UpdateDonneeDto, id: String){
+  // modification mdp
+  async update(updateDonneeDto: UpdateDonneeDto, id: string){
     try {
-      return this.userModel.findOneAndUpdate({_id: id}, _updateDonneeDto)
+      return this.userModel.findOneAndUpdate({_id: id}, updateDonneeDto)
     
     } catch (error) {
       throw new HttpException('Error updating article', HttpStatus.BAD_REQUEST);
