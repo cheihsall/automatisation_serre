@@ -21,7 +21,7 @@ humserre: any;
   }
 realtime(){
   return new Observable( observer => {
-    this.socket.on('connection',(data:any) => {
+    this.socket.on('connecte',(data:any) => {
      observer.next(data);
         })
    })
