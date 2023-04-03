@@ -19,8 +19,8 @@ import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
-  path: '/dev/ttyUSB0',
-  baudRate: 115200,
+  path: '/dev/ttyACM0',
+  baudRate: 9600,
   dataBits: 8,
   parity: 'none',
   stopBits: 1,
@@ -102,6 +102,8 @@ export class RealtimeGateway
         humidite_sol: data.split('/')[2],
         lumiere: data.split('/')[3],
       };
+      console.log(data);
+      
       client.emit('connection', param);
       const fullDate = `${jour}/${mois}/${annee}`;
       if (heure == 8 && minutes == 0 && seconds == 0) {
@@ -212,13 +214,16 @@ export class RealtimeGateway
     //FIN JOSEPHINE
 
     //DEBUT KHADIJA
-    client.on('KHADIJA', (data: any) => {
-      console.log(data);
+    parser.on('data', (data)=> {
+      const parame = {
+        temperature: data.split('/')[0],
+        humidite: data.split('/')[1],
+        humidite_sol: data.split('/')[2],
+        lumiere: data.split('/')[3],
+      };
+      client.emit('connecte', parame);
     });
   }
   //FIN KHADIJA
-  /*  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
-  } */
+ 
 }

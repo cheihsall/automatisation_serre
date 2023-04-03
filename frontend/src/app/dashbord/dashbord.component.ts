@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { RealtimeService } from '../realtime.service';
-import { donnee } from './../test2';
 
 import Swal from 'sweetalert2';
 
@@ -18,10 +17,7 @@ import Swal from 'sweetalert2';
 export class DashbordComponent implements OnInit {
 
   profileForm!:FormGroup
- temperature: any;
-  humidite: any;
-  lumiere: any;
-  humsol: any;
+
 prenom:any;
 nom:any;
 
@@ -62,7 +58,7 @@ this.router.navigateByUrl('/')
 
 
 
-    ngOnInit(): void {this.filter_entree=donnee;
+    ngOnInit(): void {
       console.log(this.filter_entree)
       this.UserService.getUser().subscribe({
         next:(data: any) => {
@@ -71,6 +67,12 @@ this.router.navigateByUrl('/')
          this.identifiant= this.prenom + ' '+ this.nom
         }
         });
+        this.UserService.realtime().subscribe({
+          next:(data:any)=>{
+          this.filter_entree = [data]
+            
+          }
+        })
    }
 
 
