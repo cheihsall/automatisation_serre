@@ -8,7 +8,10 @@ import { Router } from '@angular/router';
 })
 export class RealtimeService {
 
-
+Temperature: any;
+luminosite: any;
+humsol : any;
+humserre: any;
   endpoint: any;
   httpClient: any;
   constructor(private socket: Socket, private http: HttpClient, private route: Router) {  }
@@ -16,7 +19,14 @@ export class RealtimeService {
   allumer() {
     this.socket.emit('allumer', true)
   }
+realtime(){
+  return new Observable( observer => {
+    this.socket.on('connecte',(data:any) => {
+     observer.next(data);
+        })
+   })
 
+}
 
   arroser() {
     this.socket.emit('systeme', 'arroser')
@@ -100,6 +110,7 @@ login(user: any) {
   webserial() {
     return this.http.get('http://192.168.43.68:80');
   }
+
   updatePassword(email: any, data: any): Observable<any> {
 console.log(data.newPass);
 const donnee = { "newPassword": data.newPass, "password": data.actuelPass }
@@ -110,6 +121,7 @@ console.log(donnee);
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     });
+
   }
 
 }
