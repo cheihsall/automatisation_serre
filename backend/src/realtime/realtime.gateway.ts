@@ -30,15 +30,14 @@ const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 parser.on('data', (data) => {
   console.log(data);
 });
-
+//
 port.write('cool');
 parser.write('cool');
 /* FIN code connection port serial esp32 */
 
 @WebSocketGateway({ cors: true })
 export class RealtimeGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+  implements OnGatewayConnection, OnGatewayDisconnect {
   data = 'hello khadija ewl';
   logger = new ConsoleLogger();
   fanOn = '0';
@@ -49,7 +48,7 @@ export class RealtimeGateway
   constructor(
     @InjectModel(Parametres.name)
     private parametresModel: Model<ParametresDocument>,
-  ) {}
+  ) { }
 
   handleDisconnect() {
     console.log('disconnect');
@@ -60,7 +59,7 @@ export class RealtimeGateway
     client.on('allumer', (data: any) => {
       console.log(data);
     });
-    //insertion bdd
+    //FADEL DEBUT
 
     const date = new Date();
     const jour = date.getDate();
@@ -193,10 +192,15 @@ export class RealtimeGateway
         client.emit('connection', 'enregistrement dans la base de données');
       }
     });
+    //FIN FADEL
 
-  /*   setInterval(() => {
+    //DEBUT CHEIKH
+    /* setInterval(() => {
       client.emit('idcvddarte', this.data);
     }, 5000); */
+    //FIN CHEIKH
+
+    //DEBUT JOSEPHINE
     client.on('systeme', (data: any) => {
       console.log(data);
       if (data == 'arroser') {
@@ -207,11 +211,23 @@ export class RealtimeGateway
       }
     });
 
-    client.on('request', (data: any) => {
+    //FIN JOSEPHINE
+
+    //DEBUT KHADIJA
+    client.on('KHADIJA', (data: any) => {
       console.log(data);
     });
+    parser.on('data', (data)=> {
+      const param = {
+        temperature: data.split('/')[0],
+        humidite: data.split('/')[1],
+        humidite_sol: data.split('/')[2],
+        lumiere: data.split('/')[3],
+      };
+      client.emit('connecte', param);
+    });
   }
-
+  //FIN KHADIJA
   /*  @SubscribeMessage('message')
   handleMessage(client: any, payload: any): string {
     return 'Hello world!';
