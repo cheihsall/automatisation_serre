@@ -1,4 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateDonneeDto } from './create-donnee.dto';
-
-export class UpdateDonneeDto extends PartialType(CreateDonneeDto) {}
+import { IsNotEmpty } from 'class-validator';
+export class UpdateDonneeDto extends PartialType(CreateDonneeDto) {
+  @IsNotEmpty({ message: 'Le nouveau mot de passe est requis' })
+  newPassword: string;
+}

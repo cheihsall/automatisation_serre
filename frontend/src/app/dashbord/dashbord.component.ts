@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { RealtimeService } from '../realtime.service';
 import { donnee } from './../test2';
-
+import * as bcrypt from 'bcryptjs';
 import Swal from 'sweetalert2';
 
 
@@ -24,9 +24,13 @@ export class DashbordComponent implements OnInit {
   humsol: any;
 prenom:any;
 nom:any;
-
+email:any;
+password:any;
+cryptpass:any;
   submitted=false;
   invalid = false;
+  succes = false;
+  message = 'Actuel mot de pass incorrect'
   //champs ancien mot de passe
   inputType:any = "password";
   inputType_txt = 0;
@@ -69,6 +73,9 @@ this.router.navigateByUrl('/')
          this.prenom = data.prenom;
          this.nom = data.nom;
          this.identifiant= this.prenom + ' '+ this.nom
+         this.email = data.email;
+         this.password = data.password;
+
         }
         });
    }
@@ -84,23 +91,37 @@ this.router.navigateByUrl('/')
 
     }
 
-    onSubmite(){
+    async onSubmite(){
 
       this.submitted = true;
       this.passeIdentique();
       if(this.profileForm.invalid){
+
         return;
       }
 
-      this.UserService.updatePassword(localStorage.getItem('id'), this.profileForm.value).subscribe((data)=>{
-       
+      const goodPassword = await bcrypt.compare(
+        this.profileForm.value.actuelPass,
+        this.password, );
+      this.cryptpass = await bcrypt.hash(this.profileForm.value.actuelPass, 10);
+      if(!goodPassword ){
+        this.succes = true;
+        this.profileForm.value.newPass.reset;
+        //console.log(this.cryptpass );
+        console.log(this.profileForm.value.newPass);
+
+
+        return;
+      }
+      this.UserService.updatePassword(this.email, this.profileForm.value).subscribe((data)=>{
+
            Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Modification réussi !',
           });window.setTimeout(function(){location.reload()},1000)
-  
-  
+
+
        }
        ,(err)=>{
         this.pass= " mot_de_passe incorrect"
@@ -108,7 +129,7 @@ this.router.navigateByUrl('/')
           this.pass = ""
         }, 2000);
        })
-  
+
 
 
     }
@@ -117,50 +138,10 @@ this.router.navigateByUrl('/')
       this.ngOnInit();
       location.reload();
     }
-    eyes (type:any) {
-      if (type == "password") {
-         this.inputType_pwd = 0;
-         this.inputType_txt = 1;
-         this.inputType = "text";
-         //console.log('type password');
-  
-      } else {
-        this.inputType = "password";
-        this.inputType_pwd = 1;
-        this.inputType_txt = 0;
-        //console.log('type text');
-      }
-    }
-  
-    eyes_nouveau (type:any) {
-      if (type == "password") {
-         this.inputType_nouveau_pwd = 0;
-         this.inputType_nouveau_txt = 1;
-         this.inputType_nouveau = "text";
-  
-  
-      } else {
-        this.inputType_nouveau = "password";
-        this.inputType_nouveau_pwd = 1;
-        this.inputType_nouveau_txt = 0;
-  
-      }
-    }
-  
-    eyes_confirm (type:any) {
-      if (type == "password") {
-         this.inputType_confirm_pwd = 0;
-         this.inputType_confirm_txt = 1;
-         this.inputType_confirm = "text";
-  
-  
-      } else {
-        this.inputType_confirm = "password";
-        this.inputType_confirm_pwd = 1;
-        this.inputType_confirm_txt = 0;
-  
-      }
-    }
+
 
 
     }
+
+
+

@@ -100,16 +100,17 @@ login(user: any) {
   webserial() {
     return this.http.get('http://192.168.43.68:80');
   }
-  updatePassword(id: any, data: any): Observable<any> {
-    console.log(id);
-
-    console.log(data);
-
-    let API_URL = `${this.endpoint}/updateUser/${id}`;
-
-    return this.http.patch(`http://localhost:3001/donnees/${id}`, {"actuelPass": data.actuelPass,
-  "newPass":data.newPass})
+  updatePassword(email: any, data: any): Observable<any> {
+console.log(data.newPass);
+const donnee = { "newPassword": data.newPass, "password": data.actuelPass }
+console.log(donnee);
+    return this.http.patch(`http://localhost:3001/donnees/${email}`,  donnee , {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    });
   }
-  
+
 }
 
