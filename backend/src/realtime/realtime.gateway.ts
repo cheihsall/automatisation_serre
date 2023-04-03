@@ -20,7 +20,7 @@ import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
   path: '/dev/ttyUSB0',
-  baudRate: 115200,
+  baudRate: 9600,
   dataBits: 8,
   parity: 'none',
   stopBits: 1,
@@ -103,6 +103,8 @@ export class RealtimeGateway
         humidite_sol: data.split('/')[2],
         lumiere: data.split('/')[3],
       };
+      console.log(data);
+      
       client.emit('connection', param);
       const fullDate = `${jour}/${mois}/${annee}`;
       if (heure == 8 && minutes == 0 && seconds == 0) {
@@ -192,9 +194,9 @@ export class RealtimeGateway
       }
     });
 
-    setInterval(() => {
+  /*   setInterval(() => {
       client.emit('idcvddarte', this.data);
-    }, 5000);
+    }, 5000); */
     client.on('systeme', (data: any) => {
       console.log(data);
       if (data == 'arroser') {
