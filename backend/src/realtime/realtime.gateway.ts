@@ -40,7 +40,10 @@ export class RealtimeGateway
 {
   data = 'hello khadija ewl';
   logger = new ConsoleLogger();
-  systeme = '1';
+  systemeON = '1';
+  systemeOff = '0';
+  ToitOuvert = '2';
+  ToitFermer = '3';
   @WebSocketServer()
   public server: Server;
   public socket: Socket;
@@ -64,19 +67,31 @@ export class RealtimeGateway
     /* partie joséphine */
     client.on('systeme', (data: any) => {
       console.log(data);
+      /* debut extracteur */
       if (data == '1') {
-        //this.systeme = onData;
-        parser.on('data',(data)=>{
-          port.write(this.systeme);
-          })
+        
+        port.write(this.systemeON);
       }
-      this.logger.log(this.systeme);
+      
+      this.logger.log(this.systemeON);
+      if (data == '0') {
+        port.write(this.systemeOff);
+     
+      }
+        /* Fin extracteur */
+
+          /* debut Toit */
       if (data == '2') {
-        parser.on('data',(data)=>{
-          port.write(this.systeme);
-          })
-        /*  console.log('arduino arrete  darroser les plante'); */
+        port.write(this.ToitOuvert);
+       
       }
+      this.logger.log(this.ToitOuvert);
+      if (data == '3') {
+        port.write(this.ToitFermer);
+       
+      }
+      //this.logger.log(this.ToitFermer);
+      
     });
 
 

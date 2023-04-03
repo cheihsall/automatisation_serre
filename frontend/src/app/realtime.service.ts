@@ -40,7 +40,7 @@ export class RealtimeService {
     this.socket.emit('systeme', '2' )
   }
   Fermeture() {
-    this.socket.emit('systeme', 'Fermeture toit' )
+    this.socket.emit('systeme', '3' )
   }
   /* pour extracteur d'aire */
   Allumer() {

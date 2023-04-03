@@ -64,25 +64,13 @@ export class FormulaireComponent implements OnInit{
       error:(err) => {
 console.log(err.error.code);
 this.code = err.error.code;
-        if (this.code == "nomail") {
+       
           this.eror = true;
-          this.message = "L'email n'existe pas !";
+          this.message = err.error.code;
           setTimeout(() => {
             window.location.reload();
           }, 2000);
-        } else if (this.code == "nopass") {
-          this.eror = true;
-          this.message = "Mots de passe incorrect !";
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-        } else if (this.code == "erreur") {
-          this.eror = true;
-          this.message = "Une erreur c'est produite, !";
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        }
+        
       }
 
     });
@@ -110,21 +98,11 @@ const rfid = {idcarte: this.donnee};
 
 console.log(err.error.code);
 this.code = err.error.code;
-        if (this.code == "nocarte") {
-          this.eror = true;
-          this.message = "Accés refusé !";
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        } else if (this.code == "nocvarte") {
-          this.success = true;
-          this.message = "Accés autorisé !";
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-
-
-    }
+this.eror = true;
+this.message = err.error.code;
+setTimeout(() => {
+  window.location.reload();
+}, 2000);
      }
 
       });
