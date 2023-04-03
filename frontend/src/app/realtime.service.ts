@@ -8,14 +8,24 @@ import { Router } from '@angular/router';
 })
 export class RealtimeService {
 
-
+Temperature: any;
+luminosite: any;
+humsol : any;
+humserre: any;
   endpoint: any;
   httpClient: any;
   constructor(private socket: Socket, private http: HttpClient, private route: Router) {  }
   allumer() {
     this.socket.emit('allumer', true)
   }
+realtime(){
+  return new Observable( observer => {
+    this.socket.on('connection',(data:any) => {
+     observer.next(data);
+        })
+   })
 
+}
 
   arroser() {
     this.socket.emit('systeme', 'arroser')
@@ -90,7 +100,7 @@ login(user: any) {
 
     console.log(data);
 
-    let API_URL = `${this.endpoint}/updateUser/${id}`;
+    let API_URL = `${this.endpoint}/${id}`;
 
     return this.http.patch(`http://localhost:3001/donnees/${id}`, {"actuelPass": data.actuelPass,
   "newPass":data.newPass})
