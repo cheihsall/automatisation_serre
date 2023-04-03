@@ -12,9 +12,9 @@ export class RealtimeService {
   endpoint: any;
   httpClient: any;
   constructor(private socket: Socket, private http: HttpClient, private route: Router) {  }
-  allumer() {
+ /*  allumer() {
     this.socket.emit('allumer', true)
-  }
+  } */
 
 
   arroser() {
@@ -37,17 +37,17 @@ export class RealtimeService {
   }
 /* pour l'ouverture et la fermeture du toit */
   ouverture() {
-    this.socket.emit('systeme', 'ouverture toit' )
+    this.socket.emit('systeme', '2' )
   }
   Fermeture() {
     this.socket.emit('systeme', 'Fermeture toit' )
   }
   /* pour extracteur d'aire */
   Allumer() {
-    this.socket.emit('systeme', 'Extracteur Allumé' )
+    this.socket.emit('systeme', '1' )
   }
   Eteindre() {
-    this.socket.emit('systeme', 'Extracteur éteinte' )
+    this.socket.emit('systeme', '0' )
   }
 
   login_nfc() {
@@ -85,6 +85,15 @@ login(user: any) {
   webserial() {
     return this.http.get('http://192.168.43.68:80');
   }
+  updatePassword(id: any, data: any): Observable<any> {
+    console.log(id);
 
+    console.log(data);
+
+    let API_URL = `${this.endpoint}/updateUser/${id}`;
+
+    return this.http.patch(`http://localhost:3001/donnees/${id}`, {"actuelPass": data.actuelPass,
+  "newPass":data.newPass})
+  }
 }
 
