@@ -37,7 +37,8 @@ parser.write('cool');
 
 @WebSocketGateway({ cors: true })
 export class RealtimeGateway
-  implements OnGatewayConnection, OnGatewayDisconnect {
+  implements OnGatewayConnection, OnGatewayDisconnect
+{
   data = 'hello khadija ewl';
   logger = new ConsoleLogger();
   fanOn = '0';
@@ -48,7 +49,7 @@ export class RealtimeGateway
   constructor(
     @InjectModel(Parametres.name)
     private parametresModel: Model<ParametresDocument>,
-  ) { }
+  ) {}
 
   handleDisconnect() {
     console.log('disconnect');
@@ -103,7 +104,7 @@ export class RealtimeGateway
         lumiere: data.split('/')[3],
       };
       console.log(data);
-      
+
       client.emit('connection', param);
       const fullDate = `${jour}/${mois}/${annee}`;
       if (heure == 8 && minutes == 0 && seconds == 0) {
@@ -214,7 +215,7 @@ export class RealtimeGateway
     //FIN JOSEPHINE
 
     //DEBUT KHADIJA
-    parser.on('data', (data)=> {
+    parser.on('data', (data) => {
       const parame = {
         temperature: data.split('/')[0],
         humidite: data.split('/')[1],
@@ -225,5 +226,4 @@ export class RealtimeGateway
     });
   }
   //FIN KHADIJA
- 
 }
