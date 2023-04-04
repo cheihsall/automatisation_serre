@@ -7,7 +7,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
-import { Server } from 'ws';
+import { Server, WebSocket } from 'ws';
 import {
   Parametres,
   ParametresDocument,
@@ -18,6 +18,7 @@ import { SerialPort } from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
+
 const port = new SerialPort({
   path: '/dev/ttyACM0',
   baudRate: 9600,
@@ -27,10 +28,7 @@ const port = new SerialPort({
 });
 
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-parser.on('data', (data) => {
-  console.log(data);
-});
-//
+
 port.write('cool');
 parser.write('cool');
 /* FIN code connection port serial esp32 */
@@ -48,88 +46,28 @@ export class RealtimeGateway
   @WebSocketServer()
   public server: Server;
   public socket: Socket;
-
+  private url = 'ws://192.168.43.68:81';
   constructor(
     @InjectModel(Parametres.name)
     private parametresModel: Model<ParametresDocument>,
-  ) {}
-
-  handleDisconnect() {
-    console.log('disconnect');
-  }
-  handleConnection(@ConnectedSocket() client: Socket) {
-    console.log('Connexion Websocket');
-
-    client.on('allumer', (data: any) => {
-      console.log(data);
-    });
-    //FADEL DEBUT
-
-    const date = new Date();
-    const jour = date.getDate();
-    const mois = date.getMonth() + 1;
-    const annee = date.getFullYear();
-    const heure = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const temperature = 30;
-    const humidite = 20;
-    const humidite_sol = 80;
-    const lumiere = 10;
-    client.on('fanOn', (onData) => {
-      //port.write(onData);
-      //this.fanOn = onData;
-      /*port.drain((err) => {
-        console.log(err);
-      });*/
-    });
-    client.on('fanOff', (offData) => {
-      //  this.fanOn = offData;
-      //port.write(offData);
-      /*port.drain((err) => {
-        console.log(err);
-      });*/
-    });
-
+  ) {
     parser.on('data', (data) => {
-      //port.write('cool');
-      //console.log(data);
-      // port.write(this.fanOn);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      port.drain((err) => {
-        //console.log(err);
-      });
-      //this.logger.log(this.fanOn);
-      const param = {
-        temperature: data.split('/')[0],
-        humidite: data.split('/')[1],
-        humidite_sol: data.split('/')[2],
-        lumiere: data.split('/')[3],
-      };
       console.log(data);
 
-      client.emit('connection', param);
+      const date = new Date();
+      const jour = date.getDate();
+      const mois = date.getMonth() + 1;
+      const annee = date.getFullYear();
+      const heure = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
       const fullDate = `${jour}/${mois}/${annee}`;
-      if (heure == 8 && minutes == 0 && seconds == 0) {
+      const temperature = data.split('/')[0];
+      const humidite = data.split('/')[1];
+      const humidite_sol = data.split('/')[2];
+      const lumiere = data.split('/')[3];
+      if (heure == 23 && minutes == 28 && seconds == 0) {
         const createdparam = new this.parametresModel({
-          '8h': {
-            temperature: temperature,
-            humidite: humidite,
-            humidite_sol: '--',
-            lumiere: '--',
-          },
-          '12h': {
-            temperature: '--',
-            humidite: '--',
-            humidite_sol: '--',
-            lumiere: '--',
-          },
-          '19h': {
-            temperature: '--',
-            humidite: '--',
-            humidite_sol: '--',
-            lumiere: '--',
-          },
           temperature: temperature,
           humidite: humidite,
           humidite_sol: humidite_sol,
@@ -139,63 +77,67 @@ export class RealtimeGateway
           moyenne: { temperature, humidite },
         });
         createdparam.save();
-        client.emit('connection', 'enregistrement dans la base de données');
-      }
-      if (heure == 8 && minutes == 0 && seconds == 0) {
-        this.parametresModel
-          .updateOne(
-            { date: fullDate },
-            {
-              '12h16': {
-                temperature: temperature,
-                humidite: humidite,
-                humidite_sol: humidite_sol,
-                lumiere: lumiere,
-              },
-            },
-          )
-          .then((data) => {
-            console.log(data);
-          });
-        client.emit('connection', 'enregistrement dans la base de données');
+        console.log('les donnees de 8h sont inserer avec succes');
       }
       if (heure == 12 && minutes == 0 && seconds == 0) {
-        this.parametresModel
-          .updateOne(
-            { date: fullDate },
-            {
-              '12h17': {
-                temperature: temperature,
-                humidite: humidite,
-                humidite_sol: humidite_sol,
-                lumiere: lumiere,
-              },
-            },
-          )
-          .then((data) => {
-            console.log(data);
-          });
-        client.emit('connection', 'enregistrement dans la base de données');
+        const createdparam = new this.parametresModel({
+          temperature: temperature,
+          humidite: humidite,
+          humidite_sol: humidite_sol,
+          lumiere: lumiere,
+          date: fullDate,
+          heure: `${heure}:${minutes}:${seconds}`,
+          moyenne: { temperature, humidite },
+        });
+        createdparam.save();
+        console.log('les donnees de 12h sont inserer avec succes');
       }
-      if (heure == 19 && minutes == 0 && seconds == 0) {
-        this.parametresModel
-          .updateOne(
-            { date: fullDate },
-            {
-              '12h18': {
-                temperature: temperature,
-                humidite: humidite,
-                humidite_sol: humidite_sol,
-                lumiere: lumiere,
-              },
-            },
-          )
-          .then((data) => {
-            console.log(data);
-          });
-        client.emit('connection', 'enregistrement dans la base de données');
+      if (heure == 18 && minutes == 0 && seconds == 0) {
+        const createdparam = new this.parametresModel({
+          temperature: temperature,
+          humidite: humidite,
+          humidite_sol: humidite_sol,
+          lumiere: lumiere,
+          date: fullDate,
+          heure: `${heure}:${minutes}:${seconds}`,
+          moyenne: { temperature, humidite },
+        });
+        createdparam.save();
+        console.log('les donnees de 18h sont inserer avec succes');
       }
+      //client.emit('connection', 'enregistrement dans la base de données');
     });
+  }
+
+  handleDisconnect() {
+    console.log('disconnect');
+  }
+  handleConnection(
+    @ConnectedSocket() client: Socket,
+    cient = new WebSocket(this.url),
+  ) {
+    //
+
+    console.log('Connexion Websocket');
+
+    client.on('allumer', (data: any) => {
+      console.log(data);
+    });
+    //FADEL DEBUT
+
+    cient.onopen = () => {
+      console.log('WebSocket client connected');
+    };
+    cient.onerror = (error) => {
+      console.error('WebSocket client error:', error);
+    };
+    cient.onmessage = (message) => {
+      console.log('WebSocket client received message:', message.data);
+    };
+
+
+     
+    
     //FIN FADEL
 
     //DEBUT CHEIKH

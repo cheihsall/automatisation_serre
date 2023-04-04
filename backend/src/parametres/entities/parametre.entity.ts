@@ -8,11 +8,11 @@ export class Parametres {
   @Prop()
   temperature: string;
   @Prop()
-  humserre: string;
+  humidite: string;
   @Prop()
-  humsol: string;
+  humidite_sol: string;
   @Prop()
-  luminosite: string;
+  lumiere: string;
   @Prop()
   date: string;
   @Prop()
