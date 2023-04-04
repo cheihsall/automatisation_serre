@@ -63,14 +63,11 @@ export class FormulaireComponent implements OnInit{
 
       error:(err) => {
 console.log(err.error.code);
-this.code = err.error.code;
-       
           this.eror = true;
           this.message = err.error.code;
           setTimeout(() => {
             window.location.reload();
           }, 2000);
-        
       }
 
     });
@@ -95,14 +92,14 @@ const rfid = {idcarte: this.donnee};
       },
 
       error:(err) => {
+        this.eror = true;
+          this.message = err.error.code;
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
 
-console.log(err.error.code);
-this.code = err.error.code;
-this.eror = true;
-this.message = err.error.code;
-setTimeout(() => {
-  window.location.reload();
-}, 2000);
+
+
      }
 
       });

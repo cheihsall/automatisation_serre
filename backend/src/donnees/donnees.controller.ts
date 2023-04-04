@@ -17,7 +17,7 @@ import { UpdateDonneeDto } from './dto/update-donnee.dto';
 @UseGuards(JwtAuthGuard)
 @Controller('donnees')
 export class DonneesController {
-  constructor(private readonly donneesService: DonneesService) { }
+  constructor(private readonly donneesService: DonneesService) {}
 
   @Post('/p')
   create(@Body() createDonneeDto: CreateDonneeDto) {
@@ -34,9 +34,14 @@ export class DonneesController {
     return this.donneesService.findOne(+id);
   }
 
+  // @Patch(':id')
+  // update(@Body() updateDonneeDto: UpdateDonneeDto, @Param('id') id: string) {
+  //  return this.donneesService.update(updateDonneeDto, id);
+  //}
+
   @Patch(':id')
-  update(@Body() updateDonneeDto: UpdateDonneeDto, @Param('id') id: string) {
-    return this.donneesService.update(updateDonneeDto, id);
+  update(@Param('id') id: string, @Body() updateDonneeDto: UpdateDonneeDto) {
+    return this.donneesService.update(id, updateDonneeDto);
   }
 
   @Delete(':id')

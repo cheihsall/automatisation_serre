@@ -18,9 +18,9 @@ import { SerialPort } from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
-
 const port = new SerialPort({
   path: '/dev/ttyACM0',
+
   baudRate: 9600,
   dataBits: 8,
   parity: 'none',
@@ -28,9 +28,17 @@ const port = new SerialPort({
 });
 
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-
-port.write('cool');
-parser.write('cool');
+/*parser.on('data', (data) => {
+  try {
+    const json = JSON.parse(data);
+    console.log(json.idcarte);
+  } catch (err) {
+    console.error(err);
+  }
+});*/
+//
+//port.write('cool');
+//parser.write('cool');
 /* FIN code connection port serial esp32 */
 
 @WebSocketGateway({ cors: true })
@@ -135,15 +143,22 @@ export class RealtimeGateway
       console.log('WebSocket client received message:', message.data);
     };
 
-
-     
-    
     //FIN FADEL
 
     //DEBUT CHEIKH
-    setInterval(() => {
-      client.emit('idcvddarte', this.data);
-    }, 5000);
+
+    //setInterval(() => {
+    /*parser.on('data', (data) => {
+      try {
+        const json = JSON.parse(data);
+        console.log(json.idcarte);
+        client.emit('idcarte', json.idcarte);
+      } catch (err) {
+        console.error(err);
+      }
+    });*/
+
+    //  }, 5000);
     //FIN CHEIKH
 
     //DEBUT JOSEPHINE
