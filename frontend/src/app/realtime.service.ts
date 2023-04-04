@@ -8,13 +8,14 @@ import { Router } from '@angular/router';
 })
 export class RealtimeService {
 
-
+Temperature: any;
+luminosite: any;
+humsol : any;
+humserre: any;
   endpoint: any;
   httpClient: any;
   constructor(private socket: Socket, private http: HttpClient, private route: Router) {  }
- /*  allumer() {
-    this.socket.emit('allumer', true)
-  } */
+  //JOSEPHINE
 
 
   arroser() {
@@ -50,6 +51,10 @@ export class RealtimeService {
     this.socket.emit('systeme', '0' )
   }
 
+  //FIN JOSEPHINE SOCKET
+
+  //CHEIKH SOCKET
+
   login_nfc() {
     return new Observable(observer => {
       this.socket.on('idcarte', (data: unknown) => {
@@ -59,6 +64,16 @@ export class RealtimeService {
       });
     });
      }
+//FIN CHEIKH SOCKET
+
+//FADEL SOCKET
+
+//FIN FADEL SOCKET
+
+//KHADIJA SOCKET
+
+
+//FINKHADIJASOCKET
 
 login(user: any) {
     return this.http.post('http://localhost:3001/auth/login', user);
@@ -85,15 +100,19 @@ login(user: any) {
   webserial() {
     return this.http.get('http://192.168.43.68:80');
   }
-  updatePassword(id: any, data: any): Observable<any> {
-    console.log(id);
 
-    console.log(data);
+  updatePassword(email: any, data: any): Observable<any> {
+console.log(data.newPass);
+const donnee = { "newPassword": data.newPass, "password": data.actuelPass }
+console.log(donnee);
+    return this.http.patch(`http://localhost:3001/donnees/${email}`,  donnee , {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    });
 
-    let API_URL = `${this.endpoint}/updateUser/${id}`;
-
-    return this.http.patch(`http://localhost:3001/donnees/${id}`, {"actuelPass": data.actuelPass,
-  "newPass":data.newPass})
   }
+
 }
 

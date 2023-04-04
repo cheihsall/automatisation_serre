@@ -6,7 +6,7 @@ import {
   HttpStatus,
   Injectable,
   UnauthorizedException,
-  NotFoundException
+  NotFoundException,
 } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/mongoose';
@@ -14,7 +14,7 @@ import { Model } from 'mongoose';
 import { CreateDonneeDto } from './dto/create-donnee.dto';
 import { UpdateDonneeDto } from './dto/update-donnee.dto';
 import { User, UserDocument } from './entities/donnee.entity';
-import * as bcrypt  from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class DonneesService {
@@ -40,10 +40,9 @@ export class DonneesService {
   }
 
   // modification mdp
-  async update(updateDonneeDto: UpdateDonneeDto, id: string){
+  async update(updateDonneeDto: UpdateDonneeDto, id: string) {
     try {
-      return this.userModel.findOneAndUpdate({_id: id}, updateDonneeDto)
-    
+      return this.userModel.findOneAndUpdate({ _id: id }, updateDonneeDto);
     } catch (error) {
       throw new HttpException('Error updating article', HttpStatus.BAD_REQUEST);
     }
