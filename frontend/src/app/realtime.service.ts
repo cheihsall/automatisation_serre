@@ -15,6 +15,15 @@ humserre: any;
   endpoint: any;
   httpClient: any;
   constructor(private socket: Socket, private http: HttpClient, private route: Router) {  }
+
+  realtime(){
+    return new Observable( observer => {
+      this.socket.on('connecte',(data:any) => {
+       observer.next(data);
+          })
+     })
+
+  }
   //JOSEPHINE
 
 

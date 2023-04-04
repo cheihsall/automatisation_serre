@@ -62,8 +62,9 @@ export class FormulaireComponent implements OnInit{
       },
 
       error:(err) => {
-console.log(err.error.code);
+//console.log(err.error.code);
           this.eror = true;
+          //if (err.error.code == 'undefined'){ this.message ='rr'}
           this.message = err.error.code;
           setTimeout(() => {
             window.location.reload();
@@ -94,6 +95,7 @@ const rfid = {idcarte: this.donnee};
       error:(err) => {
         this.eror = true;
           this.message = err.error.code;
+
           setTimeout(() => {
             window.location.reload();
           }, 3000);
