@@ -21,7 +21,8 @@ export class SystemeComponent implements OnInit {
  imgpompe ='assets/pompe.jpeg'; //image de la pompe qui gére l'arrosage par défaut
  imgpompegif ='assets/pompe.gif'; //image gif de la pompe
 
-
+ temperature: any
+ humidity: any
  /* déclaration des Etats activé et désactivé des boutons */
  clicked = false; //active/désactive bouton ouverture fenetre
  clicke =true; //active/désactive bouton fermeture fenetre
@@ -98,7 +99,7 @@ Allumer(imageNameObject: { srcr: string; srcs: string; src: string;}) {
  arreter(imageNameObject: { srcr: string; srcs: string; src: string;}) {
    this.imgpompe = imageNameObject.src;
    this.socketService.arreter()
- 
+
  }
  arroseTomate(imageNameObject: { srcr: string; srcs: string; src: string;}) {
    this. imgtomate= imageNameObject.src;
@@ -123,4 +124,3 @@ Allumer(imageNameObject: { srcr: string; srcs: string; src: string;}) {
 
  }
 }
-

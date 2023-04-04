@@ -17,7 +17,7 @@ import { UpdateDonneeDto } from './dto/update-donnee.dto';
 @UseGuards(JwtAuthGuard)
 @Controller('donnees')
 export class DonneesController {
-  constructor(private readonly donneesService: DonneesService) { }
+  constructor(private readonly donneesService: DonneesService) {}
 
   @Post('/p')
   create(@Body() createDonneeDto: CreateDonneeDto) {
