@@ -13,6 +13,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 const config: SocketIoConfig= {
   url: 'http://localhost:3001',
   options: {
@@ -28,6 +29,7 @@ const config: SocketIoConfig= {
     HistoriqueComponent,
     MapComponent,
     SystemeComponent,
+   
 
 
 

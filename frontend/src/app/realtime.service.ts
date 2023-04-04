@@ -15,18 +15,17 @@ humserre: any;
   endpoint: any;
   httpClient: any;
   constructor(private socket: Socket, private http: HttpClient, private route: Router) {  }
-  //JOSEPHINE
-  allumer() {
-    this.socket.emit('allumer', true)
-  }
-realtime(){
-  return new Observable( observer => {
-    this.socket.on('connecte',(data:any) => {
-     observer.next(data);
-        })
-   })
 
-}
+  realtime(){
+    return new Observable( observer => {
+      this.socket.on('connecte',(data:any) => {
+       observer.next(data);
+          })
+     })
+
+  }
+  //JOSEPHINE
+
 
   arroser() {
     this.socket.emit('systeme', 'arroser')
@@ -48,17 +47,17 @@ realtime(){
   }
 /* pour l'ouverture et la fermeture du toit */
   ouverture() {
-    this.socket.emit('systeme', 'ouverture toit' )
+    this.socket.emit('systeme', '2' )
   }
   Fermeture() {
-    this.socket.emit('systeme', 'Fermeture toit' )
+    this.socket.emit('systeme', '3' )
   }
   /* pour extracteur d'aire */
   Allumer() {
-    this.socket.emit('systeme', 'Extracteur Allumé' )
+    this.socket.emit('systeme', '1' )
   }
   Eteindre() {
-    this.socket.emit('systeme', 'Extracteur éteinte' )
+    this.socket.emit('systeme', '0' )
   }
 
   //FIN JOSEPHINE SOCKET

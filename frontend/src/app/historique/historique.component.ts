@@ -24,7 +24,7 @@ export class HistoriqueComponent implements OnInit{
   donne8h! : any;
   donne12h!:any;
   donne19h!:any;
- 
+
 
 
   ngOnInit(){
@@ -52,7 +52,6 @@ export class HistoriqueComponent implements OnInit{
     }
 
 }
-
 
 
 
