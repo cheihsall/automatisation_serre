@@ -16,17 +16,19 @@ import { UpdateDonneeDto } from './dto/update-donnee.dto';
 import { User, UserDocument } from './entities/donnee.entity';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { UserNotFoundException } from './exceptions/userNotFound.exception';
+import { IncorrectPasswordException } from './exceptions/IncorrectPasswordException';
 @Injectable()
 export class DonneesService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private readonly jwtService: JwtService,
   ) {}
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   async create(_createDonneeDto: CreateDonneeDto) {
     const newUser = new this.userModel(_createDonneeDto);
     const hash = await bcrypt.hash(newUser.password, 10);
-    //return res.json({ message: "entre" })
+
     newUser.password = hash;
     return newUser.save();
   }
@@ -39,13 +41,35 @@ export class DonneesService {
     return `This action returns a #${id} donnee`;
   }
 
-  // modification mdp
-  async update(updateDonneeDto: UpdateDonneeDto, id: string) {
-    try {
-      return this.userModel.findOneAndUpdate({ _id: id }, updateDonneeDto);
-    } catch (error) {
-      throw new HttpException('Error updating article', HttpStatus.BAD_REQUEST);
+  saltOrRounds = 10;
+  async update(id: string, updateUserDto: UpdateDonneeDto) {
+    const User = await this.userModel.findOne({ email: id });
+
+    if (!User) {
+      throw new UserNotFoundException();
     }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      updateUserDto.password,
+      User.password,
+    );
+    if (!isPasswordCorrect) {
+      throw new IncorrectPasswordException();
+    }
+    updateUserDto.newPassword = await bcrypt.hash(
+      updateUserDto.newPassword,
+      this.saltOrRounds,
+    );
+    const newUser = await this.userModel.findOneAndUpdate(
+      { email: id },
+      { password: updateUserDto.newPassword },
+    );
+
+    if (!newUser) {
+      throw new UserNotFoundException();
+    }
+
+    return { status: 200, message: 'Mot de passe modifié avec succès' };
   }
 
   remove(id: number) {
@@ -59,15 +83,14 @@ export class DonneesService {
         email: createDonneeDto.email,
       });
       if (!user) {
-        throw new UnauthorizedException({ message: 'nomail', code: 'nomail' });
-        //return { message: 'nomail', code: 'nomail' };
+        throw new UnauthorizedException({ code: 'cet email n existe pas' });
       }
       const goodPassword = await bcrypt.compare(
         createDonneeDto.password,
         user.password,
       );
       if (!goodPassword) {
-        throw new UnauthorizedException({ message: 'nopass', code: 'nopass' });
+        throw new UnauthorizedException({ code: 'mot de pass incorrect' });
       }
     } else {
       user = await this.userModel.findOne({
@@ -76,7 +99,7 @@ export class DonneesService {
       if (!user) {
         throw new UnauthorizedException({
           message: 'nocarte',
-          code: 'nocarte',
+          code: 'accés refusé',
         });
       }
     }
@@ -86,6 +109,7 @@ export class DonneesService {
       email: user.email,
       nom: user.nom,
       prenom: user.prenom,
+      password: user.password,
     };
   }
 }
