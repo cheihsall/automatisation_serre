@@ -51,6 +51,12 @@ export class RealtimeGateway
   systemeOff = '0';
   ToitOuvert = '2';
   ToitFermer = '3';
+  Arrosageauto = '4';
+  Arretauto = '5';
+  ArrosageTomate = '6';
+  Arretomate= '7';
+  ArrosageOignon = '8';
+  ArretOignon= '9';
   @WebSocketServer()
   public server: Server;
   public socket: Socket;
@@ -183,6 +189,37 @@ export class RealtimeGateway
       if (data == '3') {
         port.write(this.ToitFermer);
       }
+       /* Fin Toit */
+       /*  Debut arrosage */
+       if (data == '4') {
+        port.write(this.Arrosageauto);
+      }
+      this.logger.log(this.Arrosageauto);
+      if (data == '5') {
+        port.write(this.Arretauto);
+      }
+       /* Fin arrosage */
+         /*  Debut arrosage Tomate */
+         if (data == '6') {
+          port.write(this.ArrosageTomate);
+        }
+        this.logger.log(this.Arretomate);
+        if (data == '7') {
+          port.write(this.Arretomate);
+        }
+         /* Fin arrosage Tomate */
+
+         /*  Debut arrosage Tomate */
+         if (data == '8') {
+          port.write(this.ArrosageOignon);
+        }
+        this.logger.log(this.ArrosageOignon);
+        if (data == '9') {
+          port.write(this.ArretOignon);
+        }
+         /* Fin arrosage Tomate */
+
+         
       //this.logger.log(this.ToitFermer);
     });
 

@@ -28,22 +28,22 @@ humserre: any;
 
 
   arroser() {
-    this.socket.emit('systeme', 'arroser')
+    this.socket.emit('systeme', '4')
   }
   arreter() {
-    this.socket.emit('systeme', 'arreter')
+    this.socket.emit('systeme', '5')
   }
   arroseTomate(){
-    this.socket.emit('systeme', 'arrosage des Tomates')
+    this.socket.emit('systeme', '6')
   }
   arretomate(){
-    this.socket.emit('systeme', 'arret arrosage  Tomates')
+    this.socket.emit('systeme', '7')
   }
   arroseOignon() {
-    this.socket.emit('systeme', 'arrosage des Oignons' )
+    this.socket.emit('systeme', '8' )
   }
   arretOignon() {
-    this.socket.emit('systeme', 'arret arrosage Oignons' )
+    this.socket.emit('systeme', '9' )
   }
 /* pour l'ouverture et la fermeture du toit */
   ouverture() {
