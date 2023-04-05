@@ -24,6 +24,7 @@ export class HistoriqueComponent implements OnInit{
   donne12h!:any;
   donne19h!:any;
   filter_entree!: Historique[];
+  restaure!: Historique[]; // pour faire revenir la liste une fois le filtre est effacé
 
     constructor(
 
@@ -35,6 +36,7 @@ export class HistoriqueComponent implements OnInit{
    this.RealtimeService.gethisto().subscribe((data) => {
     console.log(data);
     this.filter_entree=data as unknown as Historique[]
+    this.restaure=data as unknown as Historique[]
     console.log(this.filter_entree);
 
    })
@@ -43,31 +45,15 @@ export class HistoriqueComponent implements OnInit{
   }
 
 //recherche par calendrier
- /*  calend(e:any)
-    {
-      const search =new Date(e.target.value)
-      console.log(e.target.value)
-      if (e.target.value == ''){
-        this.filter_entree = this.filter_entree as unknown as Historique[]
-        return
-      }
-      this.filter_entree = this.filter_entree.filter((el:any)=>{
-        const date=new Date(el.date)
 
-        console.log(date.getFullYear(),search.getFullYear(),search.getMonth(),search.getMonth())
-
-
-        return date.getFullYear()===search.getFullYear() && date.getMonth()===search.getMonth() && date.getDate()===search.getDate();
-      })
-    } */
     calend(e:any) {
       const search = new Date(e.target.value)
       console.log(e.target.value)
-
       if (e.target.value == '') {
-        this.filter_entree = this.filter_entree as unknown as Historique[]
+        this.filter_entree = this.restaure as unknown as Historique[]
         return
       }
+
 
       this.filter_entree = this.filter_entree.filter((el:any) => {
         const date = new Date(el.date)
@@ -76,10 +62,8 @@ export class HistoriqueComponent implements OnInit{
 
         return date.getFullYear() === search.getFullYear() && date.getMonth() === search.getMonth() && date.getDate() === search.getDate();
       })
-    }
 
-    effacer() {
-      this.filter_entree = []; // réinitialiser le tableau filter_entree à sa valeur d'origine
+
     }
 
 
