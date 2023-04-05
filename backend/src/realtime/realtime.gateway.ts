@@ -57,14 +57,14 @@ export class RealtimeGateway
       const heure = date.getHours();
       const minutes = date.getMinutes();
       const seconds = date.getSeconds();
-      /*  const fullDate = `${jour}/${mois}/${annee}`; */
       const fullDate = `${annee}-${mois}-${jour}`;
       const temperature = data.split('/')[0];
       const humidite = data.split('/')[1];
       const humidite_sol = data.split('/')[2];
       const lumiere = data.split('/')[3];
+
       //insertion
-      if (heure == 12 && minutes == 21 && seconds == 40) {
+      if (heure == 13 && minutes == 37 && seconds == 30) {
         const createdparam = new this.parametresModel({
           temperature: temperature,
           humidite: humidite,
@@ -115,7 +115,6 @@ export class RealtimeGateway
     cient = new WebSocket(this.url),
   ) {
     //
-
     console.log('Connexion Websocket');
 
     client.on('allumer', (data: any) => {

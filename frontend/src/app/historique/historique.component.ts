@@ -35,28 +35,53 @@ export class HistoriqueComponent implements OnInit{
    this.RealtimeService.gethisto().subscribe((data) => {
     console.log(data);
     this.filter_entree=data as unknown as Historique[]
+    console.log(this.filter_entree);
+
    })
     /* console.log(this.filter_entree) */
 
-
   }
 
-
 //recherche par calendrier
-  calend(e:any)
+ /*  calend(e:any)
     {
+      const search =new Date(e.target.value)
       console.log(e.target.value)
       if (e.target.value == ''){
         this.filter_entree = this.filter_entree as unknown as Historique[]
         return
       }
       this.filter_entree = this.filter_entree.filter((el:any)=>{
-        console.log(e.target.value.toLowerCase() + 1);
+        const date=new Date(el.date)
+
+        console.log(date.getFullYear(),search.getFullYear(),search.getMonth(),search.getMonth())
 
 
-        return el.Date.toLowerCase().includes(e.target.value.toLowerCase())
+        return date.getFullYear()===search.getFullYear() && date.getMonth()===search.getMonth() && date.getDate()===search.getDate();
+      })
+    } */
+    calend(e:any) {
+      const search = new Date(e.target.value)
+      console.log(e.target.value)
+
+      if (e.target.value == '') {
+        this.filter_entree = this.filter_entree as unknown as Historique[]
+        return
+      }
+
+      this.filter_entree = this.filter_entree.filter((el:any) => {
+        const date = new Date(el.date)
+
+        console.log(date.getFullYear(), search.getFullYear(), search.getMonth(), search.getDate())
+
+        return date.getFullYear() === search.getFullYear() && date.getMonth() === search.getMonth() && date.getDate() === search.getDate();
       })
     }
+
+    effacer() {
+      this.filter_entree = []; // réinitialiser le tableau filter_entree à sa valeur d'origine
+    }
+
 
 }
 
