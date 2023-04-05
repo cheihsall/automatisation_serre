@@ -95,5 +95,11 @@ login(user: any) {
     return this.http.patch(`http://localhost:3001/donnees/${id}`, {"actuelPass": data.actuelPass,
   "newPass":data.newPass})
   }
+
+ // pour l'historique récuperation  
+ gethisto(){
+
+  return this.http.get(`http://localhost:3001/parametres`)
+}
 }
 

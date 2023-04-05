@@ -22,8 +22,8 @@ export class DashbordComponent implements OnInit {
   humidite: any;
   lumiere: any;
   humsol: any;
-prenom:any;
-nom:any;
+  prenom:any;
+  nom:any;
 
   submitted=false;
   invalid = false;
@@ -93,14 +93,14 @@ this.router.navigateByUrl('/')
       }
 
       this.UserService.updatePassword(localStorage.getItem('id'), this.profileForm.value).subscribe((data)=>{
-       
+
            Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Modification réussi !',
           });window.setTimeout(function(){location.reload()},1000)
-  
-  
+
+
        }
        ,(err)=>{
         this.pass= " mot_de_passe incorrect"
@@ -108,7 +108,7 @@ this.router.navigateByUrl('/')
           this.pass = ""
         }, 2000);
        })
-  
+
 
 
     }
@@ -123,7 +123,7 @@ this.router.navigateByUrl('/')
          this.inputType_txt = 1;
          this.inputType = "text";
          //console.log('type password');
-  
+
       } else {
         this.inputType = "password";
         this.inputType_pwd = 1;
@@ -131,34 +131,34 @@ this.router.navigateByUrl('/')
         //console.log('type text');
       }
     }
-  
+
     eyes_nouveau (type:any) {
       if (type == "password") {
          this.inputType_nouveau_pwd = 0;
          this.inputType_nouveau_txt = 1;
          this.inputType_nouveau = "text";
-  
-  
+
+
       } else {
         this.inputType_nouveau = "password";
         this.inputType_nouveau_pwd = 1;
         this.inputType_nouveau_txt = 0;
-  
+
       }
     }
-  
+
     eyes_confirm (type:any) {
       if (type == "password") {
          this.inputType_confirm_pwd = 0;
          this.inputType_confirm_txt = 1;
          this.inputType_confirm = "text";
-  
-  
+
+
       } else {
         this.inputType_confirm = "password";
         this.inputType_confirm_pwd = 1;
         this.inputType_confirm_txt = 0;
-  
+
       }
     }
 

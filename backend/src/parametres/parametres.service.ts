@@ -1,28 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { CreateParametreDto } from './dto/create-parametre.dto';
-import { UpdateParametreDto } from './dto/update-parametre.dto';
+import { Parametres, ParametresDocument } from './entities/parametre.entity';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { CreateParametreDto } from 'src/parametres/dto/create-parametre.dto';
 
 @Injectable()
 export class ParametresService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  create(createParametreDto: CreateParametreDto) {
-    return 'This action adds a new parametre';
+  //insertion bdd
+  constructor(
+    @InjectModel(Parametres.name)
+    private ParametresSchema: Model<ParametresDocument>,
+  ) {}
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  async handleConnection() {}
+
+  create(createparametreDto: CreateParametreDto) {
+    const createdparam = new this.ParametresSchema(createparametreDto);
+    return createdparam.save();
   }
 
   findAll() {
-    return `This action returns all parametres`;
+    return this.ParametresSchema.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} parametre`;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(id: number, updateParametreDto: UpdateParametreDto) {
-    return `This action updates a #${id} parametre`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} parametre`;
+  findOne(id: string) {
+    return this.ParametresSchema.findById(id).exec();
   }
 }

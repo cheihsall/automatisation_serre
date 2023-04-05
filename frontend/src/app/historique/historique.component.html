@@ -9,7 +9,7 @@
         <h1 class="text-center " style="margin-left: 550px;"> Historiques</h1>
         <form style="margin-left:350px;">
 
-          <input (change)="calend($event)" class="form-control me-2" type="date" id="cal" name="calendrier">
+          <input (change)="($event)" class="form-control me-2" type="date" id="cal" name="calendrier">
           <!--  -->
         </form>
       </div>
@@ -38,12 +38,12 @@
         <tr
           *ngFor="let periode of filter_entree | paginate: {itemsPerPage:6, currentPage:page, totalItems:totalLenght };">
 
-          <td  align="center">{{periode.Date}}</td>
-          <td align="center">{{periode.Heure}}</td>
-          <td align="center">{{periode.Temperature}}</td>
-          <td align="center">{{periode.Humidite}} </td>
-          <td align="center">{{periode.lumiere}} </td>
-          <td align="center">{{periode.hum_sol}}</td>
+          <td  align="center">{{periode.date}}</td>
+          <td align="center">{{periode.heure}}</td>
+          <td align="center">{{periode.temperature}}</td>
+          <td align="center">{{periode.humserre}} </td>
+          <td align="center">{{periode.luminosite}} </td>
+          <td align="center">{{periode.humsol}}</td>
         </tr>
       </tbody>
     </table>

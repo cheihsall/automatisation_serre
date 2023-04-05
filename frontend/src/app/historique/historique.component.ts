@@ -1,7 +1,8 @@
-import { donnee } from './../test';
+import { RealtimeService } from './../realtime.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup} from "@angular/forms";
 import * as _ from 'lodash';
+import { Historique } from 'model/historique';
 
 @Component({
   selector: 'app-historique',
@@ -9,14 +10,12 @@ import * as _ from 'lodash';
   styleUrls: ['./historique.component.scss']
 })
 
-
 export class HistoriqueComponent implements OnInit{
   temperature: any;
-  humidite: any;
+  humserre: any;
   lumiere: any;
   humsol: any;
   Date=new Date();
-  filter_entree!: any;
   totalLenght: any; // pagination
   page : number=1; // pagination
   updateForm!: FormGroup;
@@ -24,12 +23,20 @@ export class HistoriqueComponent implements OnInit{
   donne8h! : any;
   donne12h!:any;
   donne19h!:any;
- 
+  filter_entree!: Historique[];
 
+    constructor(
+
+    private RealtimeService: RealtimeService
+
+    ){}
 
   ngOnInit(){
-   this.filter_entree=donnee;
-    console.log(this.filter_entree)
+   this.RealtimeService.gethisto().subscribe((data) => {
+    console.log(data);
+    this.filter_entree=data as unknown as Historique[]
+   })
+    /* console.log(this.filter_entree) */
 
 
   }
@@ -40,7 +47,7 @@ export class HistoriqueComponent implements OnInit{
     {
       console.log(e.target.value)
       if (e.target.value == ''){
-        this.filter_entree = donnee
+        this.filter_entree = this.filter_entree as unknown as Historique[]
         return
       }
       this.filter_entree = this.filter_entree.filter((el:any)=>{

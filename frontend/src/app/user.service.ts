@@ -21,4 +21,5 @@ export class UserService {
     return this.http.patch(`http://localhost:3000/endpoint/updateUser/${id}`, {"actuelPass": data.actuelPass,
   "newPass":data.newPass})
   }
+
 }
