@@ -51,7 +51,7 @@
 
                   </div>
                   <div class="d-flex justify-content-center gap-2" style="margin-top: 5px;">
-                    <h2 class="text-center"  style="color: aliceblue; ">{{periode.Temperature}}°C</h2>
+                    <h2 class="text-center"  style="color: aliceblue; ">{{periode.temperature}}°C</h2>
                   </div>
                   </div>
                 </div>
@@ -65,10 +65,10 @@
 
                   </div>
                   <div class="d-flex justify-content-center  gap-4" style="margin-top: -30px;"  >
-                  <h2 class=""> sol <br><span style="color: aliceblue;">{{periode.hum_sol}}%</span></h2>
+                  <h2 class=""> sol <br><span style="color: aliceblue;">{{periode.humidite}}%</span></h2>
 
 
-                  <h2 > serre <br> <span style="color: aliceblue;" >{{periode.hum_sol}} %</span></h2>
+                  <h2 > serre <br> <span style="color: aliceblue;" >{{periode.humidite_sol}} %</span></h2>
 
                 </div>
                   </div>
@@ -118,6 +118,9 @@ aria-hidden="true">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    <div class="alert alert-danger h4 text-center" role="alert" *ngIf="succes">
+      {{message}}
+    </div>
     <div class="modal-body mx-3">
       <div class="md-form mb-5">
         <label for="actuelPass">Actuel mot de pass</label>
@@ -129,7 +132,7 @@ aria-hidden="true">
 
 
                     </div>
-                    <div style="margin-top: -10px;" *ngIf="(submitted || profileForm.controls['actuelPass'].dirty ) && profileForm.controls['actuelPass'].errors" class="text-danger">
+                    <div style="margin-top: -10px;"  class="eyes"  *ngIf="(submitted || profileForm.controls['actuelPass'].dirty ) && profileForm.controls ['actuelPass'].errors" class="text-danger">
                       <div *ngIf="(submitted || profileForm.controls['actuelPass'].dirty ) && profileForm.controls['actuelPass'].errors['required']" class="pt-2">
                         Le mot de passe est obligatoire!
                       </div>

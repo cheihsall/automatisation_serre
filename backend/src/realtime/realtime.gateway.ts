@@ -2,11 +2,12 @@ import {
   ConnectedSocket,
   OnGatewayConnection,
   OnGatewayDisconnect,
+  // SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
-import { Server } from 'ws';
+import { Server, WebSocket } from 'ws';
 import {
   Parametres,
   ParametresDocument,
@@ -19,19 +20,16 @@ import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
   path: '/dev/ttyUSB0',
-  baudRate: 115200,
+
+  baudRate: 9600,
   dataBits: 8,
   parity: 'none',
   stopBits: 1,
 });
 
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-parser.on('data', (data) => {
-  console.log(data);
-});
-/* FIN code connection port serial esp32 */
 
-@WebSocketGateway({ cors: true, namespace: 'parametres' })
+@WebSocketGateway({ cors: true })
 export class RealtimeGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
@@ -44,7 +42,7 @@ export class RealtimeGateway
   @WebSocketServer()
   public server: Server;
   public socket: Socket;
-  //private parser: ReadlineParser;
+  private url = 'ws://192.168.43.68:81';
   constructor(
     @InjectModel(Parametres.name)
     private parametresModel: Model<ParametresDocument>,
@@ -59,57 +57,63 @@ export class RealtimeGateway
       const heure = date.getHours();
       const minutes = date.getMinutes();
       const seconds = date.getSeconds();
-      const fullDate = `${jour}/${mois}/${annee}`;
+      /*  const fullDate = `${jour}/${mois}/${annee}`; */
+      const fullDate = `${annee}-${mois}-${jour}`;
       const temperature = data.split('/')[0];
-      const humserre = data.split('/')[1];
+      const humidite = data.split('/')[1];
       const humidite_sol = data.split('/')[2];
       const lumiere = data.split('/')[3];
-      if (heure == 1 && minutes == 54 && seconds == 30) {
+      //insertion
+      if (heure == 12 && minutes == 21 && seconds == 40) {
         const createdparam = new this.parametresModel({
           temperature: temperature,
-          humidite: humserre,
+          humidite: humidite,
           humidite_sol: humidite_sol,
           lumiere: lumiere,
           date: fullDate,
           heure: `${heure}:${minutes}:${seconds}`,
-          moyenne: { temperature, humserre },
+          moyenne: { temperature, humidite },
         });
         createdparam.save();
         console.log('les donnees de 8h sont inserer avec succes');
       }
-      if (heure == 10 && minutes == 38 && seconds == 0) {
+      if (heure == 12 && minutes == 0 && seconds == 0) {
         const createdparam = new this.parametresModel({
           temperature: temperature,
-          humserre: humserre,
+          humidite: humidite,
           humidite_sol: humidite_sol,
           lumiere: lumiere,
           date: fullDate,
           heure: `${heure}:${minutes}:${seconds}`,
-          moyenne: { temperature, humserre },
+          moyenne: { temperature, humidite },
         });
         createdparam.save();
         console.log('les donnees de 12h sont inserer avec succes');
       }
-      if (heure == 10 && minutes == 51 && seconds == 0) {
+      if (heure == 18 && minutes == 0 && seconds == 0) {
         const createdparam = new this.parametresModel({
           temperature: temperature,
-          humserre: humserre,
+          humidite: humidite,
           humidite_sol: humidite_sol,
           lumiere: lumiere,
           date: fullDate,
           heure: `${heure}:${minutes}:${seconds}`,
-          moyenne: { temperature, humserre },
+          moyenne: { temperature, humidite },
         });
         createdparam.save();
         console.log('les donnees de 18h sont inserer avec succes');
       }
+      //client.emit('connection', 'enregistrement dans la base de données');
     });
   }
 
   handleDisconnect() {
     console.log('disconnect');
   }
-  handleConnection(@ConnectedSocket() client: Socket) {
+  handleConnection(
+    @ConnectedSocket() client: Socket,
+    cient = new WebSocket(this.url),
+  ) {
     //
 
     console.log('Connexion Websocket');
@@ -119,12 +123,32 @@ export class RealtimeGateway
     });
     //FADEL DEBUT
 
+    cient.onopen = () => {
+      console.log('WebSocket client connected');
+    };
+    cient.onerror = (error) => {
+      console.error('WebSocket client error:', error);
+    };
+    cient.onmessage = (message) => {
+      console.log('WebSocket client received message:', message.data);
+    };
+
     //FIN FADEL
 
     //DEBUT CHEIKH
-    setInterval(() => {
-      client.emit('idcvddarte', this.data);
-    }, 5000);
+
+    //setInterval(() => {
+    /*parser.on('data', (data) => {
+      try {
+        const json = JSON.parse(data);
+        console.log(json.idcarte);
+        client.emit('idcarte', json.idcarte);
+      } catch (err) {
+        console.error(err);
+      }
+    });*/
+
+    //  }, 5000);
     //FIN CHEIKH
 
     //DEBUT JOSEPHINE
@@ -167,14 +191,3 @@ export class RealtimeGateway
   }
   //FIN KHADIJA
 }
-
-/* handleDisconnect() {
-    console.log('Socket déconnecté');
-  }
-
- 
-
-/*  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
-  } */
