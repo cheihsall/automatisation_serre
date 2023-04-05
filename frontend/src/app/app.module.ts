@@ -15,7 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const config: SocketIoConfig= {
-  url: 'http://localhost:3001',
+  url: 'http://localhost:3000',
   options: {
     transports: ['websocket']
   }
@@ -29,7 +29,7 @@ const config: SocketIoConfig= {
     HistoriqueComponent,
     MapComponent,
     SystemeComponent,
-   
+
 
 
 

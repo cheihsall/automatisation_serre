@@ -85,13 +85,13 @@ humserre: any;
 //FINKHADIJASOCKET
 
 login(user: any) {
-    return this.http.post('http://localhost:3001/auth/login', user);
+    return this.http.post('http://localhost:3000/auth/login', user);
   }
 
   getUser() {
     console.log(localStorage.getItem('token'));
 
-    return this.http.get('http://localhost:3001/auth/profile', {
+    return this.http.get('http://localhost:3000/auth/profile', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+ localStorage.getItem('token')
@@ -114,7 +114,7 @@ login(user: any) {
 console.log(data.newPass);
 const donnee = { "newPassword": data.newPass, "password": data.actuelPass }
 console.log(donnee);
-    return this.http.patch(`http://localhost:3001/donnees/${email}`,  donnee , {
+    return this.http.patch(`http://localhost:3000/donnees/${email}`,  donnee , {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token')
