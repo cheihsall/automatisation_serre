@@ -2,7 +2,8 @@ import { RealtimeService } from './../realtime.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup} from "@angular/forms";
 import * as _ from 'lodash';
-import { Historique } from 'model/historique';
+/* import { Historique } from 'model/historique'; */
+import { Historique } from '../model/historique';
 
 @Component({
   selector: 'app-historique',
@@ -23,7 +24,7 @@ export class HistoriqueComponent implements OnInit{
   donne8h! : any;
   donne12h!:any;
   donne19h!:any;
-  filter_entree!: Historique[];
+  filter_entree!: Historique[]; // pour filtrer l'affichage de l'historique
   restaure!: Historique[]; // pour faire revenir la liste une fois le filtre est effacé
 
     constructor(
@@ -33,7 +34,7 @@ export class HistoriqueComponent implements OnInit{
     ){}
 
   ngOnInit(){
-   this.RealtimeService.gethisto().subscribe((data) => {
+   this.RealtimeService.gethisto().subscribe((data) => { // pour l'historique
     console.log(data);
     this.filter_entree=data as unknown as Historique[]
     this.restaure=data as unknown as Historique[]
@@ -49,13 +50,13 @@ export class HistoriqueComponent implements OnInit{
     calend(e:any) {
       const search = new Date(e.target.value)
       console.log(e.target.value)
-      if (e.target.value == '') {
+      if (e.target.value == '') { // pour vider la recherche et restaurer la liste
         this.filter_entree = this.restaure as unknown as Historique[]
         return
       }
 
 
-      this.filter_entree = this.filter_entree.filter((el:any) => {
+      this.filter_entree = this.filter_entree.filter((el:any) => { // pour filtrer la recherche
         const date = new Date(el.date)
 
         console.log(date.getFullYear(), search.getFullYear(), search.getMonth(), search.getDate())
