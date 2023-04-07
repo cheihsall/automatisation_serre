@@ -25,6 +25,7 @@ humserre: any;
 
   }
   //JOSEPHINE
+
   arroser() {
     this.socket.emit('systeme', '4')
   }
@@ -57,7 +58,6 @@ humserre: any;
   Eteindre() {
     this.socket.emit('systeme', '0' )
   }
-
   //FIN JOSEPHINE SOCKET
 
   //CHEIKH SOCKET
@@ -120,6 +120,35 @@ console.log(donnee);
     });
 
   }
+  ApparroseTomate(id: any, data: any){
+    //const id ="642dde9ce97263f1504ed958";
 
+    const param = {  "plante": "TOMATE",
+    "nombreArrosage": "2",
+    "dureArrosage": "4000" }
+    //console.log(data);
+
+    return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
+  }
+  ApparroseOignon(id: any, data: any){
+   // const id ="642dde9ce97263f1504ed958";
+
+    const param = {  "plante": "OIGNON",
+    "nombreArrosage": "3",
+    "dureArrosage": "4000" }
+    return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
+  }
+  Reset(id: any, data: any){
+   // const id ="642dde9ce97263f1504ed958";
+
+    const param = {  "plante": "",
+    "nombreArrosage": "0",
+    "dureArrosage": "0" }
+    return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
+  }
+  Parametre() {
+    const id ="642dde9ce97263f1504ed958";
+    return this.http.get(`http://localhost:3000/arrosage/${id}`);
+  }
 }
 
