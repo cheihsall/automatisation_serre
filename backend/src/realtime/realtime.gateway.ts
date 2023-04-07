@@ -19,7 +19,7 @@ import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
-  path: '/dev/ttyUSB0',
+  path: '/dev/ttyACM2',
 
   baudRate: 9600,
   dataBits: 8,
@@ -48,9 +48,15 @@ export class RealtimeGateway
   data = 'hello khadija ewl';
   logger = new ConsoleLogger();
   systemeON = '1';
-  systemeOff = '0';
+  systemeOff = '10';
   ToitOuvert = '2';
   ToitFermer = '3';
+  Arrosageauto = '4';
+  Arretauto = '5';
+  ArrosageTomate = '6';
+  Arretomate = '7';
+  ArrosageOignon = '8';
+  ArretOignon = '9';
   @WebSocketServer()
   public server: Server;
   public socket: Socket;
@@ -173,26 +179,23 @@ export class RealtimeGateway
           extracteur: 1,
           toiture: 0,
           arrosage: 0,
-          arrosageT: 0,
-          arrosageO: 0,
         };
+        //console.log(data)
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
 
         // port.write(this.systemeON);
       }
 
-      this.logger.log(this.systemeON);
       if (data == '0') {
         const data = {
-          extracteur: 2,
+          extracteur: 0,
           toiture: 0,
           arrosage: 0,
-          arrosageT: 0,
-          arrosageO: 0,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
+
         //port.write(this.systemeOff);
       }
       /* Fin extracteur */
@@ -203,34 +206,30 @@ export class RealtimeGateway
           extracteur: 0,
           toiture: 2,
           arrosage: 0,
-          arrosageT: 0,
-          arrosageO: 0,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
         // port.write(this.ToitOuvert);
       }
-      this.logger.log(this.ToitOuvert);
+      //this.logger.log(this.ToitOuvert);
       if (data == '3') {
         const data = {
           extracteur: 0,
           toiture: 3,
           arrosage: 0,
-          arrosageT: 0,
-          arrosageO: 0,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
         //port.write(this.ToitFermer);
       }
+      /* Fin Toit */
+
       //this.logger.log(this.ToitFermer);
       if (data == '4') {
         const data = {
           extracteur: 0,
           toiture: 0,
           arrosage: 4,
-          arrosageT: 0,
-          arrosageO: 0,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
@@ -241,9 +240,8 @@ export class RealtimeGateway
           extracteur: 0,
           toiture: 0,
           arrosage: 5,
-          arrosageT: 0,
-          arrosageO: 0,
         };
+
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
         //port.write(this.ToitFermer);
@@ -252,12 +250,11 @@ export class RealtimeGateway
         const data = {
           extracteur: 0,
           toiture: 0,
-          arrosage: 0,
-          arrosageT: 6,
-          arrosageO: 0,
+          arrosage: 6,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
+        // this.logger.log(data);
         //port.write(this.ToitFermer);
       }
 
@@ -265,12 +262,11 @@ export class RealtimeGateway
         const data = {
           extracteur: 0,
           toiture: 0,
-          arrosage: 0,
-          arrosageT: 7,
-          arrosageO: 0,
+          arrosage: 7,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
+        // this.logger.log(data);
         //port.write(this.ToitFermer);
       }
 
@@ -278,9 +274,7 @@ export class RealtimeGateway
         const data = {
           extracteur: 0,
           toiture: 0,
-          arrosage: 0,
-          arrosageT: 0,
-          arrosageO: 8,
+          arrosage: 8,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
@@ -291,9 +285,7 @@ export class RealtimeGateway
         const data = {
           extracteur: 0,
           toiture: 0,
-          arrosage: 0,
-          arrosageT: 0,
-          arrosageO: 9,
+          arrosage: 9,
         };
         const jsonData = JSON.stringify(data);
         port.write(jsonData);
