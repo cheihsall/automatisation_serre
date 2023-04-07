@@ -1,7 +1,8 @@
-import { donnee } from './../test';
+import { RealtimeService } from './../realtime.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup} from "@angular/forms";
 import * as _ from 'lodash';
+import { Historique } from 'model/historique';
 
 @Component({
   selector: 'app-historique',
@@ -9,14 +10,12 @@ import * as _ from 'lodash';
   styleUrls: ['./historique.component.scss']
 })
 
-
 export class HistoriqueComponent implements OnInit{
   temperature: any;
-  humidite: any;
+  humserre: any;
   lumiere: any;
   humsol: any;
   Date=new Date();
-  filter_entree!: any;
   totalLenght: any; // pagination
   page : number=1; // pagination
   updateForm!: FormGroup;
@@ -24,32 +23,49 @@ export class HistoriqueComponent implements OnInit{
   donne8h! : any;
   donne12h!:any;
   donne19h!:any;
+  filter_entree!: Historique[];
+ restaure!: Historique[]; // pour faire revenir la liste une fois le filtre est effacé
 
+    constructor(
 
+    private RealtimeService: RealtimeService
+
+    ){}
 
   ngOnInit(){
-   this.filter_entree=donnee;
-    console.log(this.filter_entree)
+   this.RealtimeService.gethisto().subscribe((data:any) => {
+    console.log(data);
+    this.filter_entree=data as unknown as Historique[]
+    this.restaure=data as unknown as Historique[]
+    console.log(this.filter_entree);
 
+   })
+    /* console.log(this.filter_entree) */
 
   }
 
-
 //recherche par calendrier
-  calend(e:any)
-    {
+
+    calend(e:any) {
+      const search = new Date(e.target.value)
       console.log(e.target.value)
-      if (e.target.value == ''){
-        this.filter_entree = donnee
+      if (e.target.value == '') {
+        this.filter_entree = this.restaure as unknown as Historique[]
         return
       }
-      this.filter_entree = this.filter_entree.filter((el:any)=>{
-        console.log(e.target.value.toLowerCase() + 1);
 
 
-        return el.Date.toLowerCase().includes(e.target.value.toLowerCase())
+      this.filter_entree = this.filter_entree.filter((el:any) => {
+        const date = new Date(el.date)
+
+        console.log(date.getFullYear(), search.getFullYear(), search.getMonth(), search.getDate())
+
+        return date.getFullYear() === search.getFullYear() && date.getMonth() === search.getMonth() && date.getDate() === search.getDate();
       })
+
+
     }
+
 
 }
 

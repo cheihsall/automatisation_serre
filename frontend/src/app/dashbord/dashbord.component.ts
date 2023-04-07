@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { RealtimeService } from '../realtime.service';
 
-import { donnee } from './../test2';
+
 import * as bcrypt from 'bcryptjs';
 
 import Swal from 'sweetalert2';
@@ -80,7 +80,7 @@ this.router.navigateByUrl('/')
         this.UserService.realtime().subscribe({
           next:(data:any)=>{
           this.filter_entree = [data]
-            
+
           }
         })
    }
@@ -143,7 +143,6 @@ this.router.navigateByUrl('/')
       this.ngOnInit();
       location.reload();
     }
-
 
 
     }

@@ -6,6 +6,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ParametresModule } from './parametres/parametres.module';
 
 import { AuthModule } from './auth/auth.module';
+import { ArrosageService } from './arrosage/arrosage.service';
+import { ArrosageModule } from './arrosage/arrosage.module';
+
 
 @Module({
   imports: [
@@ -15,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
     DonneesModule,
     ParametresModule,
     AuthModule,
+    ArrosageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

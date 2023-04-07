@@ -37,8 +37,8 @@
       </header>
       <section class=" p "  style="display: flex; flex-direction: column;  width: 100%;height: 30%;">
 
-          <div class="  d-flex justify-content-center  gap-4  mb-3 "  style=" height: 15rem; margin-top: 2rem; margin-right: 12%; margin-left: 9%;" *ngFor="let periode of filter_entree">
-              <div class="card rounded-4" style="width: 16rem;  height: 13rem;  background-color: #91D333;">
+          <div class="  d-flex justify-content-center  gap-4  mb-3 "  style=" height: 15rem; margin-top: 2rem; margin-right: 12%; margin-left: 9%;" >
+              <div class="card rounded-4" style="width: 16rem;  height: 13rem;  background-color: #91D333;" >
                   <div class=" d-flex flex-column gap-4 "  >
                   <div  class="card-title  colorr p-2 rounded-4 d-flex justify-content-center" style="background-color: #3a3a3a;">
 
@@ -50,9 +50,14 @@
                           <span style="color: #91D333; font-size: 2rem;">Temperature</span>
 
                   </div>
-                  <div class="d-flex justify-content-center gap-2" style="margin-top: 5px;">
-                    <h2 class="text-center"  style="color: aliceblue; ">{{periode.temperature}}°C</h2>
+                  <div class="d-flex justify-content-center gap-2" style="margin-top: 5px;"*ngFor="let periode of filter_entree">
+                    <h2 class="text-center" style="color: {{periode.temperature == 0 ? 'red' : 'white'}}">{{periode.temperature}}°C</h2>
                   </div>
+                  <span class=""*ngFor="let periode of filter_entree">
+<p class="d-flex justify-content-center text-danger" *ngIf="periode.temperature == 0 ">erreur: verifier le capteur</p></span>
+
+
+
                   </div>
                 </div>
                 <div class="card rounded-4" style="width: 16rem; height: 13rem; background-color: #91D333;" >
@@ -64,16 +69,18 @@
                           <span style="color: #91D333; font-size: 2rem;">HUMIDITÉ</span>
 
                   </div>
-                  <div class="d-flex justify-content-center  gap-4" style="margin-top: -30px;"  >
-                  <h2 class=""> sol <br><span style="color: aliceblue;">{{periode.humidite}}%</span></h2>
+                  <div class="d-flex justify-content-center  gap-4" style="margin-top: -30px;" *ngFor="let periode of filter_entree" >
+                  <h2 class=""> sol <br><span style="color: {{periode.humidite == 0 ? 'red' : 'white'}}">{{periode.humidite}}%</span></h2>
 
 
-                  <h2 > serre <br> <span style="color: aliceblue;" >{{periode.humidite_sol}} %</span></h2>
+                  <h2 > serre <br> <span style="color: {{periode.humidite_sol == 0 ? 'red' : 'white'}}" >{{periode.humidite_sol}} %</span></h2>
 
                 </div>
+                <span *ngFor="let periode of filter_entree">
+                <p class="d-flex justify-content-center text-danger" *ngIf="periode.humidite == 0 || periode.humidite_sol == 0">erreur: verifier le capteur</p></span>
                   </div>
                 </div>
-                <div class="card rounded-4" style="width: 16rem;  height: 13rem;  background-color: #91D333;">
+                <div class="card rounded-4" style="width: 16rem;  height: 13rem;  background-color: #91D333;" >
                   <div class=" d-flex flex-column gap-4"  >
                   <div class="card-title  colorr p-2 rounded-4 d-flex justify-content-center" style="background-color: #3a3a3a;">
                     <img src="./assets/svgviewer-png-output (4).png" style="width: 3rem; height: 3rem;" alt="" srcset="">
@@ -81,9 +88,11 @@
                           <span style="color: #91D333; font-size: 1.8rem;">LUMINOSITÉ</span>
 
                   </div>
-                  <div class="d-flex justify-content-center gap-2" style="margin-top: 5px;">
-                  <h2  style="color: aliceblue;">{{periode.lumiere}}lux </h2>
+                  <div class="d-flex justify-content-center gap-2" style="margin-top: 5px;" *ngFor="let periode of filter_entree">
+                  <h2  style="color: {{periode.lumiere == 0 ? 'red' : 'white'}}">{{periode.lumiere}}lux </h2>
                 </div>
+                <span *ngFor="let periode of filter_entree">
+                <p class="d-flex justify-content-center text-danger" *ngIf="periode.humidite == 0 ">erreur: verifier le capteur</p></span>
                   </div>
                 </div>
                 <div class=" d-flex">

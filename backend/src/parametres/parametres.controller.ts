@@ -3,13 +3,13 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  //Patch,
   Param,
-  Delete,
+  //Delete,
 } from '@nestjs/common';
 import { ParametresService } from './parametres.service';
 import { CreateParametreDto } from './dto/create-parametre.dto';
-import { UpdateParametreDto } from './dto/update-parametre.dto';
+//import { UpdateParametreDto } from './dto/update-parametre.dto';
 
 @Controller('parametres')
 export class ParametresController {
@@ -27,19 +27,19 @@ export class ParametresController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.parametresService.findOne(+id);
+    return this.parametresService.findOne(id);
   }
 
-  @Patch(':id')
+  /*  @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateParametreDto: UpdateParametreDto,
   ) {
-    return this.parametresService.update(+id, updateParametreDto);
-  }
+    return this.parametresService.update(id, updateParametreDto);
+  } */
 
-  @Delete(':id')
+  /* @Delete(':id')
   remove(@Param('id') id: string) {
     return this.parametresService.remove(+id);
-  }
+  } */
 }

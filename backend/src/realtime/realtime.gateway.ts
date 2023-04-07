@@ -19,7 +19,7 @@ import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
-  path: '/dev/ttyUSB0',
+  path: '/dev/ttyACM2',
 
   baudRate: 9600,
   dataBits: 8,
@@ -28,14 +28,15 @@ const port = new SerialPort({
 });
 
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-/*parser.on('data', (data) => {
+
+parser.on('data', (data) => {
   try {
     const json = JSON.parse(data);
-    console.log(json.idcarte);
+    console.log(json);
   } catch (err) {
     console.error(err);
   }
-});*/
+});
 //
 //port.write('cool');
 //parser.write('cool');
@@ -48,9 +49,16 @@ export class RealtimeGateway
   data = 'hello khadija ewl';
   logger = new ConsoleLogger();
   systemeON = '1';
-  systemeOff = '0';
+  systemeOff = '10';
   ToitOuvert = '2';
   ToitFermer = '3';
+  Arrosageauto = '4';
+  Arretauto = '5';
+  ArrosageTomate = '6';
+  Arretomate = '7';
+  ArrosageOignon = '8';
+  ArretOignon = '9';
+
   @WebSocketServer()
   public server: Server;
   public socket: Socket;
@@ -60,7 +68,7 @@ export class RealtimeGateway
     private parametresModel: Model<ParametresDocument>,
   ) {
     parser.on('data', (data) => {
-      console.log(data);
+      //console.log(data);
 
       const date = new Date();
       const jour = date.getDate();
@@ -69,12 +77,14 @@ export class RealtimeGateway
       const heure = date.getHours();
       const minutes = date.getMinutes();
       const seconds = date.getSeconds();
-      const fullDate = `${jour}/${mois}/${annee}`;
+      const fullDate = `${annee}-${mois}-${jour}`;
       const temperature = data.split('/')[0];
       const humidite = data.split('/')[1];
       const humidite_sol = data.split('/')[2];
       const lumiere = data.split('/')[3];
-      if (heure == 23 && minutes == 28 && seconds == 0) {
+
+      //insertion
+      if (heure == 13 && minutes == 37 && seconds == 30) {
         const createdparam = new this.parametresModel({
           temperature: temperature,
           humidite: humidite,
@@ -125,16 +135,16 @@ export class RealtimeGateway
     cient = new WebSocket(this.url),
   ) {
     //
-
     console.log('Connexion Websocket');
 
     client.on('allumer', (data: any) => {
       console.log(data);
     });
     //FADEL DEBUT
-
+    const msg = 'hello c chikh';
     cient.onopen = () => {
       console.log('WebSocket client connected');
+      cient.send(msg);
     };
     cient.onerror = (error) => {
       console.error('WebSocket client error:', error);
@@ -148,55 +158,163 @@ export class RealtimeGateway
     //DEBUT CHEIKH
 
     //setInterval(() => {
-    /*parser.on('data', (data) => {
+    parser.on('data', (data) => {
       try {
         const json = JSON.parse(data);
-        console.log(json.idcarte);
-        client.emit('idcarte', json.idcarte);
+        //console.log(json.Rfid);
+        if (json.idcarte != '') {
+          client.emit('idcarte', json.idcarte);
+        }
       } catch (err) {
         console.error(err);
       }
-    });*/
+    });
 
     //  }, 5000);
     //FIN CHEIKH
 
     //DEBUT JOSEPHINE
     client.on('systeme', (data: any) => {
-      console.log(data);
+      //console.log(data);
       /* debut extracteur */
       if (data == '1') {
-        port.write(this.systemeON);
+        const data = {
+          extracteur: 1,
+          toiture: 0,
+          arrosage: 0,
+        };
+        //console.log(data)
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+
+        // port.write(this.systemeON);
       }
 
-      this.logger.log(this.systemeON);
       if (data == '0') {
-        port.write(this.systemeOff);
+        const data = {
+          extracteur: 0,
+          toiture: 0,
+          arrosage: 0,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+
+        //port.write(this.systemeOff);
       }
       /* Fin extracteur */
 
       /* debut Toit */
       if (data == '2') {
-        port.write(this.ToitOuvert);
+        const data = {
+          extracteur: 0,
+          toiture: 2,
+          arrosage: 0,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        // port.write(this.ToitOuvert);
       }
-      this.logger.log(this.ToitOuvert);
+      //this.logger.log(this.ToitOuvert);
       if (data == '3') {
-        port.write(this.ToitFermer);
+        const data = {
+          extracteur: 0,
+          toiture: 3,
+          arrosage: 0,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        //port.write(this.ToitFermer);
       }
+
       //this.logger.log(this.ToitFermer);
+      if (data == '4') {
+        const data = {
+          extracteur: 0,
+          toiture: 0,
+          arrosage: 4,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        //port.write(this.ToitFermer);
+      }
+      if (data == '5') {
+        const data = {
+          extracteur: 0,
+          toiture: 0,
+          arrosage: 5,
+        };
+
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        //port.write(this.ToitFermer);
+      }
+      if (data == '6') {
+        const data = {
+          extracteur: 0,
+          toiture: 0,
+          arrosage: 6,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        // this.logger.log(data);
+
+        //port.write(this.ToitFermer);
+      }
+
+      if (data == '7') {
+        const data = {
+          extracteur: 0,
+          toiture: 0,
+          arrosage: 7,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        // this.logger.log(data);
+
+        //port.write(this.ToitFermer);
+      }
+
+      if (data == '8') {
+        const data = {
+          extracteur: 0,
+          toiture: 0,
+          arrosage: 8,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        //port.write(this.ToitFermer);
+      }
+
+      if (data == '9') {
+        const data = {
+          extracteur: 0,
+          toiture: 0,
+          arrosage: 9,
+        };
+        const jsonData = JSON.stringify(data);
+        port.write(jsonData);
+        //port.write(this.ToitFermer);
+      }
     });
 
     //FIN JOSEPHINE
 
     //DEBUT KHADIJA
     parser.on('data', (data) => {
-      const parame = {
-        temperature: data.split('/')[0],
-        humidite: data.split('/')[1],
-        humidite_sol: data.split('/')[2],
-        lumiere: data.split('/')[3],
-      };
-      client.emit('connecte', parame);
+      try {
+        const json = JSON.parse(data);
+
+        // console.log(json);
+        const parame = {
+          temperature: json.Temperature,
+          humidite: json.Humidite,
+          humidite_sol: json.HumiditeSol,
+          lumiere: json.Luminosite,
+        };
+        client.emit('connecte', parame);
+      } catch (err) {
+        console.error(err);
+      }
     });
   }
   //FIN KHADIJA

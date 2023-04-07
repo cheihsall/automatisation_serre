@@ -26,24 +26,23 @@ humserre: any;
   }
   //JOSEPHINE
 
-
   arroser() {
-    this.socket.emit('systeme', 'arroser')
+    this.socket.emit('systeme', '4')
   }
   arreter() {
-    this.socket.emit('systeme', 'arreter')
+    this.socket.emit('systeme', '5')
   }
   arroseTomate(){
-    this.socket.emit('systeme', 'arrosage des Tomates')
+    this.socket.emit('systeme', '6')
   }
   arretomate(){
-    this.socket.emit('systeme', 'arret arrosage  Tomates')
+    this.socket.emit('systeme', '7')
   }
   arroseOignon() {
-    this.socket.emit('systeme', 'arrosage des Oignons' )
+    this.socket.emit('systeme', '8' )
   }
   arretOignon() {
-    this.socket.emit('systeme', 'arret arrosage Oignons' )
+    this.socket.emit('systeme', '9' )
   }
 /* pour l'ouverture et la fermeture du toit */
   ouverture() {
@@ -59,7 +58,6 @@ humserre: any;
   Eteindre() {
     this.socket.emit('systeme', '0' )
   }
-
   //FIN JOSEPHINE SOCKET
 
   //CHEIKH SOCKET
@@ -85,13 +83,13 @@ humserre: any;
 //FINKHADIJASOCKET
 
 login(user: any) {
-    return this.http.post('http://localhost:3001/auth/login', user);
+    return this.http.post('http://localhost:3000/auth/login', user);
   }
 
   getUser() {
     console.log(localStorage.getItem('token'));
 
-    return this.http.get('http://localhost:3001/auth/profile', {
+    return this.http.get('http://localhost:3000/auth/profile', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+ localStorage.getItem('token')
@@ -114,7 +112,7 @@ login(user: any) {
 console.log(data.newPass);
 const donnee = { "newPassword": data.newPass, "password": data.actuelPass }
 console.log(donnee);
-    return this.http.patch(`http://localhost:3001/donnees/${email}`,  donnee , {
+    return this.http.patch(`http://localhost:3000/donnees/${email}`,  donnee , {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -122,6 +120,42 @@ console.log(donnee);
     });
 
   }
+  ApparroseTomate(id: any, data: any){
+    //const id ="642dde9ce97263f1504ed958";
 
+    const param = {  "plante": "TOMATE",
+    "nombreArrosage": "3",
+    "dureArrosage": "10000" }
+    //console.log(data);
+
+    return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
+  }
+  ApparroseOignon(id: any, data: any){
+   // const id ="642dde9ce97263f1504ed958";
+
+    const param = {  "plante": "OIGNON",
+    "nombreArrosage": "2",
+    "dureArrosage": "8000" }
+    return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
+  }
+  Reset(id: any, data: any){
+   // const id ="642dde9ce97263f1504ed958";
+
+    const param = {  "plante": "",
+    "nombreArrosage": "0",
+    "dureArrosage": "0" }
+    return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
+  }
+  Parametre() {
+    const id ="642dde9ce97263f1504ed958";
+    return this.http.get(`http://localhost:3000/arrosage/${id}`);
+  }
+
+
+
+
+ gethisto(){
+
+  return this.http.get(`http://localhost:3000/parametres`)
 }
-
+}

@@ -38,17 +38,17 @@
         <tr
           *ngFor="let periode of filter_entree | paginate: {itemsPerPage:6, currentPage:page, totalItems:totalLenght };">
 
-          <td  align="center">{{periode.Date}}</td>
-          <td align="center">{{periode.Heure}}</td>
-          <td align="center">{{periode.Temperature}}</td>
-          <td align="center">{{periode.Humidite}} </td>
+          <td  align="center">{{periode.date}}</td>
+          <td align="center">{{periode.heure}}</td>
+          <td align="center">{{periode.temperature}}</td>
+          <td align="center">{{periode.humidite}} </td>
           <td align="center">{{periode.lumiere}} </td>
-          <td align="center">{{periode.hum_sol}}</td>
+          <td align="center">{{periode.humidite_sol}}</td>
         </tr>
       </tbody>
     </table>
     <!-- pagination -->
-    <div class="pagination fixed-bottom justify-content-center">
+    <div class="pagination fixed-bottom justify-content-center" >
       <pagination-controls (pageChange)="page=$event"></pagination-controls>
 
     </div>
