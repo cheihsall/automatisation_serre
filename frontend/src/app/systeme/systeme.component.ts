@@ -59,7 +59,11 @@ export class SystemeComponent implements OnInit {
  imgOignon ='assets/oignon.webp'; //image de la plante Oignon
  imgpompe ='assets/pompe.jpeg'; //image de la pompe qui gére l'arrosage par défaut
  imgpompegif ='assets/pompe.gif'; //image gif de la pompe
+
+ humidite_sol:any;
+
 text: any;
+
  temperature: any
  humidity: any
  id:String ="642dde9ce97263f1504ed958";
