@@ -133,6 +133,13 @@ console.log(donnee);
   ApparroseOignon(id: any, data: any){
    // const id ="642dde9ce97263f1504ed958";
 
+
+ // pour l'historique récuperation
+ gethisto(){
+
+  return this.http.get(`http://localhost:3001/parametres`)
+}
+
     const param = {  "plante": "OIGNON",
     "nombreArrosage": "3",
     "dureArrosage": "4000" }
@@ -150,5 +157,6 @@ console.log(donnee);
     const id ="642dde9ce97263f1504ed958";
     return this.http.get(`http://localhost:3000/arrosage/${id}`);
   }
+
 }
 

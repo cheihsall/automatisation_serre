@@ -80,7 +80,7 @@ this.router.navigateByUrl('/')
         this.UserService.realtime().subscribe({
           next:(data:any)=>{
           this.filter_entree = [data]
-            
+
           }
         })
    }
@@ -143,7 +143,6 @@ this.router.navigateByUrl('/')
       this.ngOnInit();
       location.reload();
     }
-
 
 
     }

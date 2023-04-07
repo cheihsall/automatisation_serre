@@ -20,7 +20,9 @@ import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
 
+
   path: '/dev/ttyACM2',
+
 
 
   baudRate: 9600,
@@ -30,6 +32,7 @@ const port = new SerialPort({
 });
 
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
+
 parser.on('data', (data) => {
   try {
     const json = JSON.parse(data);
@@ -42,6 +45,7 @@ parser.on('data', (data) => {
 //port.write('cool');
 //parser.write('cool');
 /* FIN code connection port serial esp32 */
+
 
 @WebSocketGateway({ cors: true })
 export class RealtimeGateway
@@ -78,12 +82,14 @@ export class RealtimeGateway
       const heure = date.getHours();
       const minutes = date.getMinutes();
       const seconds = date.getSeconds();
-      const fullDate = `${jour}/${mois}/${annee}`;
+      const fullDate = `${annee}-${mois}-${jour}`;
       const temperature = data.split('/')[0];
       const humidite = data.split('/')[1];
       const humidite_sol = data.split('/')[2];
       const lumiere = data.split('/')[3];
-      if (heure == 23 && minutes == 28 && seconds == 0) {
+
+      //insertion
+      if (heure == 13 && minutes == 37 && seconds == 30) {
         const createdparam = new this.parametresModel({
           temperature: temperature,
           humidite: humidite,
@@ -134,7 +140,6 @@ export class RealtimeGateway
     cient = new WebSocket(this.url),
   ) {
     //
-
     console.log('Connexion Websocket');
 
     client.on('allumer', (data: any) => {
