@@ -83,7 +83,7 @@ export class DonneesService {
         email: createDonneeDto.email,
       });
       if (!user) {
-        throw new UnauthorizedException({ code: 'cet email n existe pas' });
+        throw new UnauthorizedException({ code: "cet email n'existe pas" });
       }
       const goodPassword = await bcrypt.compare(
         createDonneeDto.password,

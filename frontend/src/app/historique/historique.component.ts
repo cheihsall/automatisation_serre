@@ -34,7 +34,7 @@ export class HistoriqueComponent implements OnInit{
     ){}
 
   ngOnInit(){
-   this.RealtimeService.gethisto().subscribe((data) => { // pour l'historique
+   this.RealtimeService.gethisto().subscribe((data:any) => {
     console.log(data);
     this.filter_entree=data as unknown as Historique[]
     this.restaure=data as unknown as Historique[]
