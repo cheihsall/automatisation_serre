@@ -68,62 +68,68 @@ export class RealtimeGateway
     private parametresModel: Model<ParametresDocument>,
   ) {
     parser.on('data', (data) => {
-      //console.log(data);
+      try {
+        //console.log(data);
 
-      const date = new Date();
-      const jour = date.getDate();
-      const mois = date.getMonth() + 1;
-      const annee = date.getFullYear();
-      const heure = date.getHours();
-      const minutes = date.getMinutes();
-      const seconds = date.getSeconds();
-      const fullDate = `${annee}-${mois}-${jour}`;
-      const temperature = data.split('/')[0];
-      const humidite = data.split('/')[1];
-      const humidite_sol = data.split('/')[2];
-      const lumiere = data.split('/')[3];
+        const json = JSON.parse(data);
+        const date = new Date();
+        const jour = date.getDate();
+        const mois = date.getMonth() + 1;
+        const annee = date.getFullYear();
+        const heure = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const fullDate = `${annee}-${mois}-${jour}`;
 
-      //insertion
-      if (heure == 13 && minutes == 37 && seconds == 30) {
-        const createdparam = new this.parametresModel({
-          temperature: temperature,
-          humidite: humidite,
-          humidite_sol: humidite_sol,
-          lumiere: lumiere,
-          date: fullDate,
-          heure: `${heure}:${minutes}:${seconds}`,
-          moyenne: { temperature, humidite },
-        });
-        createdparam.save();
-        console.log('les donnees de 8h sont inserer avec succes');
+        const temperature = json.Temperature;
+        const humidite = json.Humidite;
+        const humidite_sol = json.HumiditeSol;
+        const lumiere = json.Luminosite;
+
+        //insertion
+        if (heure == 13 && minutes == 37 && seconds == 30) {
+          const createdparam = new this.parametresModel({
+            temperature: temperature,
+            humidite: humidite,
+            humidite_sol: humidite_sol,
+            lumiere: lumiere,
+            date: fullDate,
+            heure: `${heure}:${minutes}:${seconds}`,
+            moyenne: { temperature, humidite },
+          });
+          createdparam.save();
+          console.log('les donnees de 8h sont inserer avec succes');
+        }
+        if (heure == 12 && minutes == 0 && seconds == 0) {
+          const createdparam = new this.parametresModel({
+            temperature: temperature,
+            humidite: humidite,
+            humidite_sol: humidite_sol,
+            lumiere: lumiere,
+            date: fullDate,
+            heure: `${heure}:${minutes}:${seconds}`,
+            moyenne: { temperature, humidite },
+          });
+          createdparam.save();
+          console.log('les donnees de 12h sont inserer avec succes');
+        }
+        if (heure == 18 && minutes == 0 && seconds == 0) {
+          const createdparam = new this.parametresModel({
+            temperature: temperature,
+            humidite: humidite,
+            humidite_sol: humidite_sol,
+            lumiere: lumiere,
+            date: fullDate,
+            heure: `${heure}:${minutes}:${seconds}`,
+            moyenne: { temperature, humidite },
+          });
+          createdparam.save();
+          console.log('les donnees de 18h sont inserer avec succes');
+        }
+        //client.emit('connection', 'enregistrement dans la base de données');
+      } catch (err) {
+        console.error(err);
       }
-      if (heure == 12 && minutes == 0 && seconds == 0) {
-        const createdparam = new this.parametresModel({
-          temperature: temperature,
-          humidite: humidite,
-          humidite_sol: humidite_sol,
-          lumiere: lumiere,
-          date: fullDate,
-          heure: `${heure}:${minutes}:${seconds}`,
-          moyenne: { temperature, humidite },
-        });
-        createdparam.save();
-        console.log('les donnees de 12h sont inserer avec succes');
-      }
-      if (heure == 18 && minutes == 0 && seconds == 0) {
-        const createdparam = new this.parametresModel({
-          temperature: temperature,
-          humidite: humidite,
-          humidite_sol: humidite_sol,
-          lumiere: lumiere,
-          date: fullDate,
-          heure: `${heure}:${minutes}:${seconds}`,
-          moyenne: { temperature, humidite },
-        });
-        createdparam.save();
-        console.log('les donnees de 18h sont inserer avec succes');
-      }
-      //client.emit('connection', 'enregistrement dans la base de données');
     });
   }
 
