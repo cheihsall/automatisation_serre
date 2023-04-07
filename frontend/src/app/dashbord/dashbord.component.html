@@ -92,7 +92,7 @@
                   <h2  style="color: {{periode.lumiere == 0 ? 'red' : 'white'}}">{{periode.lumiere}}lux </h2>
                 </div>
                 <span *ngFor="let periode of filter_entree">
-                <p class="d-flex justify-content-center text-danger" *ngIf="periode.humidite == 0 ">erreur: verifier le capteur</p></span>
+                <p class="d-flex justify-content-center text-danger" *ngIf="periode.lumiere == 0 ">erreur: verifier le capteur</p></span>
                   </div>
                 </div>
                 <div class=" d-flex">
