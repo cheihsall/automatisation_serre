@@ -23,8 +23,8 @@ export class HistoriqueComponent implements OnInit{
   donne8h! : any;
   donne12h!:any;
   donne19h!:any;
-  //filter_entree!: Historique[];
- // restaure!: Historique[]; // pour faire revenir la liste une fois le filtre est effacé
+  filter_entree!: Historique[];
+ restaure!: Historique[]; // pour faire revenir la liste une fois le filtre est effacé
 
     constructor(
 

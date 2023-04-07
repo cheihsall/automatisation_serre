@@ -21,17 +21,17 @@ export class SystemeComponent implements OnInit {
       minute: '2-digit',
       second: '2-digit',
     });
-    const scheduledHours = ['01:49:00', '01:45:00'];
+    const scheduledHours = ['07:00:00', '19:00:00'];
 
     const arrose = (data: any) => {
       console.log(data.nombreArrosage);
       if (data.nombreArrosage === 2) {
-        this.socketService.arroseTomate();
-        console.log('tomate arrosé');
+        this.socketService.arroseOignon();
+          console.log('ognon arrosé');
       }
       if (data.nombreArrosage === 3) {
-        this.socketService.arroseOignon();
-        console.log('ognon arrosé');
+        this.socketService.arroseTomate();
+        console.log('tomate arrosé');
       }
     };
 
@@ -39,12 +39,12 @@ export class SystemeComponent implements OnInit {
       this.socketService.Parametre().subscribe(arrose);
     }
 
-    if (heure === '01:43:00') {
+    if (heure === '12:00:00') {
       this.socketService.Parametre().subscribe((data: any) => {
         console.log(data.nombreArrosage);
         if (data.nombreArrosage === 3) {
-          this.socketService.arroseOignon();
-          console.log('ognon arrosé');
+          this.socketService.arroseTomate();
+        console.log('tomate arrosé');
 
         }
       });

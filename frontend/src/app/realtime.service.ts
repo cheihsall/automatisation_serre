@@ -124,8 +124,8 @@ console.log(donnee);
     //const id ="642dde9ce97263f1504ed958";
 
     const param = {  "plante": "TOMATE",
-    "nombreArrosage": "2",
-    "dureArrosage": "4000" }
+    "nombreArrosage": "3",
+    "dureArrosage": "10000" }
     //console.log(data);
 
     return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
@@ -134,8 +134,8 @@ console.log(donnee);
    // const id ="642dde9ce97263f1504ed958";
 
     const param = {  "plante": "OIGNON",
-    "nombreArrosage": "3",
-    "dureArrosage": "4000" }
+    "nombreArrosage": "2",
+    "dureArrosage": "8000" }
     return this.http.patch(`http://localhost:3000/arrosage/${id}`, param);
   }
   Reset(id: any, data: any){
@@ -156,6 +156,6 @@ console.log(donnee);
 
  gethisto(){
 
-  return this.http.get(`http://localhost:3001/parametres`)
+  return this.http.get(`http://localhost:3000/parametres`)
 }
 }
