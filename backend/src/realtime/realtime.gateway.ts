@@ -19,7 +19,7 @@ import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
-  path: '/dev/ttyACM0',
+  path: '/dev/ttyUSB0',
 
   baudRate: 9600,
   dataBits: 8,
