@@ -66,7 +66,7 @@ this.router.navigateByUrl('/')
 
 
     ngOnInit(): void {
-      console.log(this.filter_entree)
+     // console.log(this.filter_entree)
       this.UserService.getUser().subscribe({
         next:(data: any) => {
          this.prenom = data.prenom;
@@ -113,7 +113,7 @@ this.router.navigateByUrl('/')
         this.succes = true;
         this.profileForm.value.newPass.reset;
         //console.log(this.cryptpass );
-        console.log(this.profileForm.value.newPass);
+       // console.log(this.profileForm.value.newPass);
 
 
         return;

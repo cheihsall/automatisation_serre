@@ -45,11 +45,11 @@
                        <img src="{{imgtomate}}" class="d-block w-100" style="height: 190px;" alt="...">
                        <div *ngIf="imgtomate"><div class=" card-body d-flex  justify-content-center gap-5">
 
-                         <button  type="button"  *ngFor="let pompe of imageArroser ; " (click)="arroseTomate(pompe);"   class="btn btn-success  rounded"> Appliquer
-                       
+                         <button  type="button"  *ngFor="let pompe of imageArroser ; " (click)="arroseTomate(pompe);"  title="Apuyer pour appliquer les parametres du tomate" class="btn btn-success  rounded"> Appliquer
+
 
                          </button>
-                       <button  type="button"   *ngFor="let pompe of imageArreter ; "  (click)="arretomate(pompe);" class="btn btn-danger rounded">Annuler
+                       <button  type="button"   *ngFor="let pompe of imageArreter ; "  (click)="arretomate(pompe);" title="Apuyer pour reinitialiser les parametres d'arosage" class="btn btn-danger rounded">Annuler
                       </button></div>
 
                       <div class="content">
@@ -75,10 +75,10 @@
                        <img  src="{{imgOignon}}" class="d-block w-100" style="height: 190px;" alt="...">
                        <div *ngIf="imgOignon"><div class="card-body d-flex  justify-content-center gap-5">
 
-                         <button  type="button"  *ngFor="let pompe of imageArroser ; " (click)="arroseOignon(pompe);"   class="btn btn-success  rounded"> Appliquer
-                       
+                         <button  type="button"  *ngFor="let pompe of imageArroser ; " (click)="arroseOignon(pompe);" title="Apuyer pour appliquer les parametres de l'oignon"   class="btn btn-success  rounded"> Appliquer
+
                          </button>
-                       <button  type="button"   *ngFor="let pompe of imageArreter ; "  (click)=" arretOignon(pompe);" class="btn btn-danger rounded">Annuler
+                       <button  type="button"   *ngFor="let pompe of imageArreter ; "  (click)=" arretOignon(pompe);" title="Apuyer pour reinitialiser les parametres d'arrosage"  class="btn btn-danger rounded">Annuler
 
                       </button></div> </div>
                       <div class="content">
@@ -110,14 +110,14 @@
            <div class="card" style="width: 18rem;">
                <h5 class="card-title text-center " >Toit</h5>
 
-               
+
                <img  src="{{imgFermer}}" class="card-img-top" style="height: 190px;" alt="image">
 
                <div class="card-body d-flex  justify-content-center gap-5">
 
-                  <button type="button"  *ngFor="let imageButtonf of imageOuvert ; "  (click)="ouverture(imageButtonf); "  class="btn btn-success  rounded"   > Ouvert
+                  <button type="button"  *ngFor="let imageButtonf of imageOuvert ; "  (click)="ouverture(imageButtonf); " title="Apuyer pour ouvrir le toit" class="btn btn-success  rounded"   > Ouvrir
                  </button>
-                <button  type="button"  *ngFor="let imageButtonf of imageFermer ;" (click)="Fermeture(imageButtonf);"class="btn btn-danger rounded" > Fermer
+                <button  type="button"  *ngFor="let imageButtonf of imageFermer ;" (click)="Fermeture(imageButtonf);" title="Apuyer pour fermer le toit" class="btn btn-danger rounded" > Fermer
                 </button>
                </div>
              </div>
@@ -130,9 +130,9 @@
                <img src="{{imageSrc }}" class="card-img-top" style="height: 190px;" alt="image">
                <div class="card-body d-flex  justify-content-center gap-5">
 
-                  <button type="button"   *ngFor="let imageButton of imageButtonOn; "  (click)="Allumer(imageButton);"  class="btn btn-success  rounded"> Allumer
+                  <button type="button"   *ngFor="let imageButton of imageButtonOn; "  (click)="Allumer(imageButton);" title="Apuyer pour Allumer l'extracteur"  class="btn btn-success  rounded"> Allumer
                     </button>
-                    <button  type="button"  *ngFor="let imageButton of imageButtons;" (click)="Eteindre(imageButton);"  class="btn btn-danger rounded "> Eteindre
+                    <button  type="button"  *ngFor="let imageButton of imageButtons;" (click)="Eteindre(imageButton);" title="Apuyer pour eteindre l'extracteur"  class="btn btn-danger rounded "> Eteindre
                    </button>
 
 
@@ -147,6 +147,10 @@
    </div>
 
 
+   <div class="form-check form-switch">
+    <input title="activer / desactivé la synthese  vocale" (click)="toggleSpeech()" class="form-check-input" name="check" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+    <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+  </div>
 
 </body>
 </html>

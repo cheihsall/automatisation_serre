@@ -12,26 +12,26 @@ import { RealtimeService } from '../realtime.service';
 export class SystemeComponent implements OnInit {
  constructor(private socketService:RealtimeService,private router: Router,){
 
-  setInterval(() => {
-    console.log('ok');
-    const date = new Date();
+  setInterval(() => { //fonction pour l'arrosage automatique
+    //console.log('ok');
+    const date = new Date(); //declaration date et heure
     const fullDate = date.toLocaleDateString();
     const heure = date.toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
     });
-    const scheduledHours = ['07:00:00', '19:00:00'];
+    const scheduledHours = ['07:00:00', '19:00:00'];// tableau des heures d'arrosage
 
-    const arrose = (data: any) => {
-      console.log(data.nombreArrosage);
-      if (data.nombreArrosage === 2) {
+    const arrose = (data: any) => { // on donne a la fontion les parametre issue de la base de donnee
+    //  console.log(data.nombreArrosage);
+      if (data.nombreArrosage === 2) { // si dans la base de donnee le nombre d'arrosage = 2 il arrose le oignon
         this.socketService.arroseOignon();
-          console.log('ognon arrosé');
+         // console.log('ognon arrosé');
       }
-      if (data.nombreArrosage === 3) {
+      if (data.nombreArrosage === 3) {// sil est egal a 3 il arrose tomate
         this.socketService.arroseTomate();
-        console.log('tomate arrosé');
+        //console.log('tomate arrosé');
       }
     };
 
@@ -44,7 +44,7 @@ export class SystemeComponent implements OnInit {
         console.log(data.nombreArrosage);
         if (data.nombreArrosage === 3) {
           this.socketService.arroseTomate();
-        console.log('tomate arrosé');
+        //console.log('tomate arrosé');
 
         }
       });
@@ -61,9 +61,9 @@ export class SystemeComponent implements OnInit {
  imgpompegif ='assets/pompe.gif'; //image gif de la pompe
 
  humidite_sol:any;
-
+ isSpeechEnabled: boolean = true;
 text: any;
-
+filter_entree: any;
  temperature: any
  humidity: any
  id:String ="642dde9ce97263f1504ed958";
@@ -109,14 +109,33 @@ text: any;
 
  ngOnInit(){
 
+  this.socketService.realtime().subscribe({
+    next:(data:any)=>{
+    this.filter_entree = data
+    if(this.filter_entree.etatoit == 1){
 
+    }
+    if(this.filter_entree.etatpompe == 1){
+
+    }
+    if(this.filter_entree.etatvent == 1){
+
+    }
+
+    }
+  })
  }
+ toggleSpeech() {
+  this.isSpeechEnabled = !this.isSpeechEnabled;
+}
  textToSpeech(text: string) {
-  if ('speechSynthesis' in window) {
+  if (this.isSpeechEnabled &&  'speechSynthesis' in window) {
     const msg = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(msg);
   } else {
-    alert("Désolé, votre navigateur ne prend pas en charge la synthèse vocale.");
+    console.log('synthese vocale desactivé');
+
+    //alert("Désolé, votre navigateur ne prend pas en charge la synthèse vocale.");
   }
 }
  /*Fonction pour Extracteur d'aire  */
@@ -159,7 +178,7 @@ Allumer(imageNameObject: { srcr: string; srcs: string; src: string;}) {
    this.socketService. arroseTomate()
    this.socketService.ApparroseTomate(this.id, this.nombreArrosage).subscribe((data)=>{
 
-console.log('parametreS TOMATE applique avec succes');
+//console.log('parametreS TOMATE applique avec succes');
 this.text='Parametre tomate applique avec succes !'
     this.textToSpeech(this.text,);
 Swal.fire({
@@ -181,7 +200,7 @@ Swal.fire({
    this.socketService.arretomate ()
    this.socketService.Reset(this.id, this.nombreArrosage).subscribe((data)=>{
 
-    console.log('parametre apllique avec succes');
+    //console.log('parametre apllique avec succes');
     this.text='Parametre réinitialisé avec succes !'
     this.textToSpeech(this.text,);
     Swal.fire({
@@ -204,7 +223,7 @@ Swal.fire({
    this.socketService.arroseOignon()
    this.socketService.ApparroseOignon(this.id, this.nombreArrosage).subscribe((data)=>{
 
-    console.log('parametre OIGNON applique avec succes');
+   // console.log('parametre OIGNON applique avec succes');
     this.text='Parametre oignon applique avec succes !'
     this.textToSpeech(this.text,);
     Swal.fire({
@@ -228,7 +247,7 @@ Swal.fire({
    this.socketService.arretOignon()
    this.socketService.Reset(this.id, this.nombreArrosage).subscribe((data)=>{
 
-    console.log('parametre reinitialiser avec succes');
+  //  console.log('parametre reinitialiser avec succes');
   /*  $scope.textToSpeech = function(text) {
       if ('speechSynthesis' in window) {
         var msg = new SpeechSynthesisUtterance(text);
