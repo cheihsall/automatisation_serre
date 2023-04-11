@@ -84,7 +84,7 @@ this.donnee = data
 const rfid = {idcarte: this.donnee};
     this.userService.login(rfid).subscribe({
       next:(data: any) => {
-        console.log(data);
+        //console.log(data);
         this.success = true;
           this.message = "Accés autorisé !";
           localStorage.setItem('token', data.access_token);
@@ -111,15 +111,7 @@ const rfid = {idcarte: this.donnee};
   })
 
 
-        this.userService.webserial().subscribe((data:any) =>{
-           this.web = data;
-           //filtrer les données
-          console.log(data);
-
-
-
-        });
-
+        
 
 }
 

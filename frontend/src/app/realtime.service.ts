@@ -87,7 +87,7 @@ login(user: any) {
   }
 
   getUser() {
-    console.log(localStorage.getItem('token'));
+   // console.log(localStorage.getItem('token'));
 
     return this.http.get('http://localhost:3000/auth/profile', {
       headers: {
@@ -109,9 +109,9 @@ login(user: any) {
   }
 
   updatePassword(email: any, data: any): Observable<any> {
-console.log(data.newPass);
+//console.log(data.newPass);
 const donnee = { "newPassword": data.newPass, "password": data.actuelPass }
-console.log(donnee);
+//console.log(donnee);
     return this.http.patch(`http://localhost:3000/donnees/${email}`,  donnee , {
       headers: {
         'Content-Type': 'application/json',
