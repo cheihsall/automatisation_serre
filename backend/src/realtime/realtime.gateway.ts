@@ -19,7 +19,7 @@ import { ReadlineParser } from '@serialport/parser-readline';
 import { ConsoleLogger } from '@nestjs/common';
 
 const port = new SerialPort({
-  path: '/dev/ttyACM2',
+  path: '/dev/ttyUSB0',
 
   baudRate: 9600,
   dataBits: 8,
@@ -48,17 +48,6 @@ export class RealtimeGateway
 {
   data = 'hello khadija ewl';
   logger = new ConsoleLogger();
-  systemeON = '1';
-  systemeOff = '10';
-  ToitOuvert = '2';
-  ToitFermer = '3';
-  Arrosageauto = '4';
-  Arretauto = '5';
-  ArrosageTomate = '6';
-  Arretomate = '7';
-  ArrosageOignon = '8';
-  ArretOignon = '9';
-
   @WebSocketServer()
   public server: Server;
   public socket: Socket;
@@ -87,7 +76,7 @@ export class RealtimeGateway
         const lumiere = json.Luminosite;
 
         //insertion
-        if (heure == 13 && minutes == 37 && seconds == 30) {
+        if (heure == 10 && minutes == 39 && seconds == 30) {
           const createdparam = new this.parametresModel({
             temperature: temperature,
             humidite: humidite,
@@ -316,6 +305,10 @@ export class RealtimeGateway
           humidite: json.Humidite,
           humidite_sol: json.HumiditeSol,
           lumiere: json.Luminosite,
+          etatvent: json.etatvent,
+          etattoit: json.etatoit,
+          etatpompe: json.etatpompe,
+          insecte: json.insecte,
         };
         client.emit('connecte', parame);
       } catch (err) {
